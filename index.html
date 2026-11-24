@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Portföy">
+<meta name="theme-color" content="#0b0e13" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3f5f8" media="(prefers-color-scheme: light)">
+<meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>Portföy</title>
+<style>
+/* VOICE: sakin, kesin, bir aracı kurum uygulaması gibi — rakam önde, süs yok
+   IDEA: cebe sığan bir portföy terminali; tür bazlı dağılım halkası ve hedef sapması
+   PICTURE: büyük toplam değer + tür halkası + hedefe göre sapma çubukları
+   COLOUR/TYPE: grafit zemin, beyaz rakam, tek mavi vurgu; SF sistem fontu, tabular rakamlar
+   LAYOUT: iOS sekme çubuğu, kartlar; iPad'de iki sütun */
+:root{color-scheme:light dark;--bg:#f3f5f8;--sf:#ffffff;--sf2:#eef1f5;--line:#e3e7ed;--ink:#0d1420;--ink2:#556072;--mut:#8691a2;--up:#0b8f5a;--dn:#d23535;--ac:#2a78d6;--acs:#e3eefc;--c0:#2a78d6;--c1:#6250d6;--c2:#eda100;--c3:#eb6834;--c4:#1baf7a;--c5:#e87ba4;--c6:#6f7d95;--c7:#9a6a2f;--c8:#e34948;--c9:#0e8fa3;--c10:#008300}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0e13;--sf:#141922;--sf2:#1b2230;--line:#252e3c;--ink:#eef2f7;--ink2:#9aa6b6;--mut:#6b778a;--up:#2fcf8f;--dn:#ff6464;--ac:#3987e5;--acs:#16263d;--c0:#3987e5;--c1:#9085e9;--c2:#c98500;--c3:#d95926;--c4:#199e70;--c5:#d55181;--c6:#8d9ab0;--c7:#b5844a;--c8:#e66767;--c9:#26a9bd;--c10:#0ca30c}}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif;font-variant-numeric:tabular-nums;overflow-x:clip;-webkit-text-size-adjust:100%;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:calc(env(safe-area-inset-top) + 8px) max(16px,env(safe-area-inset-right)) 8px max(16px,env(safe-area-inset-left));display:flex;align-items:center;gap:10px;border-bottom:1px solid transparent}
+.top h1{font-size:22px;font-weight:700;margin:0;letter-spacing:-.01em;flex:1}
+.mk{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink2);white-space:nowrap}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mut)}.dot.on{background:var(--up);box-shadow:0 0 0 4px color-mix(in srgb,var(--up) 22%,transparent)}
+.ib{width:40px;height:40px;border-radius:12px;border:0;background:var(--sf);display:grid;place-items:center;flex:none}
+.ib svg{width:20px;height:20px}.spin svg{animation:sp 1s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+main{max-width:1100px;margin:0 auto;padding:8px max(16px,env(safe-area-inset-right)) 24px max(16px,env(safe-area-inset-left))}
+.view{display:none}.view.on{display:block}
+.card{background:var(--sf);border-radius:18px;padding:18px;margin-bottom:14px}
+.card h2{font-size:17px;margin:0 0 12px;font-weight:650;display:flex;align-items:center;gap:8px}
+.card h2 .sub{margin-left:auto;font-size:13px;font-weight:500;color:var(--ink2)}
+.hero{padding:22px 18px}
+.lbl{font-size:13px;color:var(--ink2)}
+.big{font-size:clamp(34px,9vw,46px);font-weight:700;letter-spacing:-.02em;line-height:1.08;margin:4px 0 10px;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:14px;font-weight:600;padding:6px 10px;border-radius:10px;background:var(--sf2);white-space:nowrap}
+.up{color:var(--up)}.dn{color:var(--dn)}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.kv b{display:block;font-size:16px;white-space:nowrap}
+.grid2{display:grid;gap:14px}
+@media(min-width:820px){.grid2{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}.grid2>.card{margin:0}.grid2{margin-bottom:14px}}
+.seg{display:flex;background:var(--sf2);border-radius:11px;padding:3px;gap:2px}
+.seg button{flex:1;border:0;background:none;padding:7px 10px;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink2);min-height:36px;white-space:nowrap}
+.seg button.on{background:var(--sf);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.donutwrap{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:20px;align-items:start}
+.donut{position:sticky;top:90px}
+@media(max-width:430px),(min-width:820px){.donutwrap{grid-template-columns:1fr}.donut{position:relative;top:0;width:100%;max-width:230px;margin:0 auto 6px}}
+.donut{aspect-ratio:1}.donut{position:relative}.donut svg{width:100%;height:100%;display:block}
+.donut path{cursor:pointer;transition:opacity .2s}.donut.sel path:not(.on){opacity:.28}
+.dc{position:absolute;inset:0;display:grid;place-content:center;text-align:center;pointer-events:none}
+.dc b{font-size:22px}.dc span{font-size:12px;color:var(--ink2);max-width:110px}
+.alloc{display:flex;flex-direction:column;gap:2px}
+.grp{border-radius:12px;padding:8px 8px;cursor:pointer}.grp.on{background:var(--sf2)}
+.gh{display:flex;align-items:center;gap:8px;font-weight:650}
+.sw{width:10px;height:10px;border-radius:3px;flex:none}
+.gh .n{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gh .p{white-space:nowrap}
+.tbar{position:relative;height:6px;border-radius:3px;background:var(--sf2);margin:6px 0 2px 18px}
+.grp.on .tbar{background:var(--bg)}
+.tbar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.tbar em{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);border-radius:1px}
+.gm{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--ink2);margin-left:18px}
+.etfs{margin:6px 0 2px 18px;display:grid;gap:3px}
+.etfs div{display:flex;justify-content:space-between;font-size:13.5px;color:var(--ink2)}
+.etfs b{color:var(--ink);font-weight:600}
+.rb{display:grid;gap:8px}
+.rbr{display:flex;align-items:center;gap:10px;font-size:14.5px}
+.rbr .n{flex:1}.rbr .a{font-weight:650;white-space:nowrap}
+.note{font-size:13px;color:var(--ink2);margin:10px 0 0}
+.fig{position:relative;height:200px}.fig svg{position:absolute;inset:0;width:100%;height:100%}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12.5px;padding:6px 9px;border-radius:8px;white-space:nowrap;transform:translate(-50%,-110%);display:none}
+.empty{color:var(--ink2);font-size:14.5px;text-align:center;padding:26px 10px}
+.bar{display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.bar .seg{flex:1;min-width:260px}
+.list{background:var(--sf);border-radius:18px;overflow:hidden}
+.row{display:flex;gap:12px;align-items:center;padding:13px 16px;border-top:1px solid var(--line);cursor:pointer}
+.row:first-child{border-top:0}.row:active{background:var(--sf2)}
+.tk{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-weight:750;font-size:12px;color:#fff;flex:none;letter-spacing:.02em}
+.rc{flex:1}.rc .t{font-weight:650;display:flex;gap:6px;align-items:center}
+.tag{font-size:11.5px;font-weight:600;color:var(--ink2);background:var(--sf2);padding:2px 7px;border-radius:6px;white-space:nowrap}
+.rc .s,.rr .s{font-size:13px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rr{text-align:right;flex:none}.rr .v{font-weight:650;white-space:nowrap}
+.cols{display:none}
+@media(min-width:760px){.cols{display:grid}.row,.cols{display:grid;grid-template-columns:44px minmax(0,1.6fr) repeat(5,minmax(0,1fr))}.rc2{display:block!important;text-align:right;white-space:nowrap}.rr{display:none}.cols{padding:10px 16px;font-size:12.5px;color:var(--ink2);border-bottom:1px solid var(--line)}.cols span{text-align:right}}
+.rc2{display:none}.wide{display:none}@media(min-width:760px){.wide{display:inline}}
+.tot{display:flex;justify-content:space-between;padding:14px 16px;border-top:1px solid var(--line);font-weight:650;background:var(--sf2)}
+form .f{margin-bottom:14px}
+label.l{display:block;font-size:13px;font-weight:600;color:var(--ink2);margin:0 0 6px}
+.in{width:100%;min-height:48px;border-radius:12px;border:1px solid var(--line);background:var(--sf2);padding:10px 14px;font-size:17px;outline:none}
+.in:focus{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 25%,transparent)}
+textarea.in{min-height:110px;font-size:14px;font-family:ui-monospace,Menlo,monospace}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.hint{font-size:12.5px;color:var(--ink2);margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.lnk{border:0;background:var(--acs);color:var(--ac);font-weight:600;font-size:12.5px;padding:4px 9px;border-radius:8px}
+.btn{width:100%;min-height:50px;border:0;border-radius:14px;background:var(--ac);color:#fff;font-weight:650;font-size:17px}
+.btn.sec{background:var(--sf2);color:var(--ink)}.btn.red{background:color-mix(in srgb,var(--dn) 14%,var(--sf));color:var(--dn)}
+.btn:disabled{opacity:.45}
+.btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:12px}
+.prev{background:var(--sf2);border-radius:14px;padding:12px 14px;margin:4px 0 14px;display:grid;gap:6px;font-size:14.5px}
+.prev div{display:flex;justify-content:space-between;gap:10px}.prev span{color:var(--ink2)}
+.err{color:var(--dn);font-size:14px;font-weight:600;min-height:20px;margin-bottom:8px}
+.tx{display:flex;gap:10px;align-items:center;padding:11px 0;border-top:1px solid var(--line);font-size:14.5px}
+.tx:first-child{border-top:0}.tx .k{font-size:11.5px;font-weight:700;padding:3px 7px;border-radius:6px;flex:none}
+.k.B{background:color-mix(in srgb,var(--up) 16%,transparent);color:var(--up)}.k.S{background:color-mix(in srgb,var(--dn) 16%,transparent);color:var(--dn)}.k.D{background:var(--sf2);color:var(--ink2)}
+.tx .m{flex:1}.tx .d{font-size:12.5px;color:var(--ink2)}
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:space-around;background:color-mix(in srgb,var(--sf) 88%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
+.tabs button{flex:1;max-width:140px;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11px;font-weight:600;color:var(--mut);padding:4px 0;min-height:50px}
+.tabs svg{width:25px;height:25px}.tabs button.on{color:var(--ac)}
+.tabs .plus span:first-child{width:40px;height:30px;border-radius:10px;background:var(--ac);color:#fff;display:grid;place-items:center}
+.tabs .plus svg{width:20px;height:20px}
+.sheet{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.45)}
+.sheet.on{display:flex}
+.sc{background:var(--sf);width:100%;max-width:560px;border-radius:22px 22px 0 0;padding:10px 18px calc(18px + env(safe-area-inset-bottom));max-height:88vh;overflow:auto;animation:su .22s ease-out}
+@media(min-width:700px){.sheet{align-items:center}.sc{border-radius:22px}}
+@keyframes su{from{transform:translateY(40px);opacity:0}}
+.grab{width:38px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 12px}
+.sc h3{font-size:20px;margin:0 0 4px}
+.dl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px 16px;margin:14px 0}
+.dl b{display:block;font-size:16.5px;white-space:nowrap}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:60;background:var(--ink);color:var(--bg);padding:11px 16px;border-radius:14px;font-size:14.5px;font-weight:600;display:none;gap:14px;align-items:center;max-width:92vw}
+.toast.on{display:flex}.toast button{border:0;background:none;color:var(--ac);font-weight:700;padding:0;white-space:nowrap}
+.lock{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:env(safe-area-inset-top) 20px env(safe-area-inset-bottom)}
+.lock.on{display:flex}.lock h2{margin:0;font-size:20px}
+.pd{display:flex;gap:16px}.pd i{width:14px;height:14px;border-radius:50%;border:2px solid var(--ink2)}.pd i.f{background:var(--ink);border-color:var(--ink)}
+.pd.bad{animation:sh .35s}@keyframes sh{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.pad{display:grid;grid-template-columns:repeat(3,76px);gap:16px}
+.pad button{height:76px;border-radius:50%;border:0;background:var(--sf);font-size:28px;font-weight:500}
+.pad button.x{background:none;font-size:15px;color:var(--ink2)}
+body.hide .amt{filter:blur(7px)}
+.banner{background:var(--acs);border-radius:16px;padding:14px 16px;margin-bottom:14px;font-size:14.5px;display:flex;gap:12px;align-items:center}
+.banner .btn{width:auto;min-height:40px;font-size:14.5px;padding:0 14px;flex:none}
+.set .row{cursor:default;grid-template-columns:none!important;display:flex!important}
+.tg{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:8px 10px;align-items:center}
+.tg .in{min-height:42px;font-size:16px;text-align:right;padding:6px 10px}
+.sum{font-weight:650;margin-top:10px}
+a{color:var(--ac)}
+ol.steps{padding-left:20px;margin:6px 0 10px;font-size:14.5px;color:var(--ink2)}ol.steps li{margin:3px 0}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="lock" id="lock"><h2>Portföy kilitli</h2><div class="lbl" id="lockMsg">PIN kodunu gir</div><div class="pd" id="pd"><i></i><i></i><i></i><i></i></div>
+<div class="pad" id="pad"><button>1</button><button>2</button><button>3</button><button>4</button><button>5</button><button>6</button><button>7</button><button>8</button><button>9</button><span></span><button>0</button><button class="x" data-x="1">Sil</button></div></div>
+
+<header class="top"><h1 id="ttl">Özet</h1>
+<div class="mk"><span class="dot" id="mdot"></span><span id="mtxt">—</span></div>
+<button class="ib" id="eye" aria-label="Tutarları gizle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></button>
+<button class="ib" id="rf" aria-label="Fiyatları yenile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg></button>
+</header>
+
+<main>
+<section class="view" id="v-ozet"></section>
+<section class="view" id="v-var"></section>
+<section class="view" id="v-isl">
+ <div class="grid2">
+ <div class="card"><h2>Yeni işlem</h2>
+ <form id="txf" autocomplete="off">
+  <div class="f"><div class="seg" id="kind"><button type="button" data-k="B" class="on">Alım</button><button type="button" data-k="S">Satış</button></div></div>
+  <div class="two f"><div><label class="l" for="fs">ETF</label><input class="in" id="fs" list="syms" placeholder="Örn. VOO" autocapitalize="characters" spellcheck="false"><datalist id="syms"></datalist></div>
+  <div><label class="l" for="ft">Tür</label><select class="in" id="ft"></select><input class="in" id="ftn" placeholder="Yeni tür adı" style="display:none;margin-top:8px"></div></div>
+  <div class="two f"><div><label class="l" for="fq">Adet</label><input class="in" id="fq" inputmode="decimal" placeholder="0"></div>
+  <div><label class="l" for="fp" id="fpl">Alım fiyatı ($)</label><input class="in" id="fp" inputmode="decimal" placeholder="0,00"></div></div>
+  <div class="hint" id="fhint"></div>
+  <div class="f" style="margin-top:12px"><label class="l" for="fd">Tarih</label><input class="in" id="fd" type="date"></div>
+  <div class="prev" id="fprev"></div>
+  <div class="err" id="ferr"></div>
+  <button class="btn" id="fsub" type="submit">Alımı kaydet</button>
+ </form></div>
+ <div class="card"><h2>İşlem geçmişi <span class="sub" id="realz"></span></h2><div id="txl"></div></div>
+ </div>
+</section>
+<section class="view set" id="v-ayr">
+ <div class="grid2">
+ <div>
+ <div class="card"><h2>Fiyat kaynağı</h2>
+  <p class="note" style="margin:0 0 10px">Fiyatlar Finnhub'ın ücretsiz planından alınır: ABD ETF'leri için anlık fiyat, dakikada 60 sorgu. Anahtar yalnızca bu cihazda saklanır.</p>
+  <ol class="steps"><li><a href="https://finnhub.io/register" target="_blank" rel="noopener">finnhub.io/register</a> adresinden ücretsiz hesap aç.</li><li>Panelde görünen <b>API Key</b>'i kopyala, aşağıya yapıştır.</li></ol>
+  <label class="l" for="key">Finnhub API anahtarı</label><input class="in" id="key" spellcheck="false" autocapitalize="off" placeholder="d1abc…">
+  <div class="btns"><button class="btn" id="keyS" type="button">Kaydet ve test et</button></div>
+  <div class="f" style="margin-top:16px"><label class="l">Otomatik yenileme (piyasa açıkken)</label><div class="seg" id="ref"><button type="button" data-r="0">Kapalı</button><button type="button" data-r="30">30 sn</button><button type="button" data-r="60">1 dk</button><button type="button" data-r="300">5 dk</button></div></div>
+ </div>
+ <div class="card"><h2>Güvenlik</h2>
+  <p class="note" style="margin:0 0 10px">Portföy verileri sunucuya gönderilmez, yalnızca bu cihazda tutulur. PIN, uygulama açıldığında ve 2 dakikadan uzun arka planda kaldığında sorulur.</p>
+  <div class="two"><input class="in" id="pin1" inputmode="numeric" maxlength="4" placeholder="Yeni PIN" type="password"><input class="in" id="pin2" inputmode="numeric" maxlength="4" placeholder="Tekrar" type="password"></div>
+  <div class="btns"><button class="btn" id="pinS" type="button">PIN belirle</button><button class="btn red" id="pinX" type="button">PIN'i kaldır</button></div>
+  <div class="hint" id="pinI"></div>
+ </div>
+ </div>
+ <div>
+ <div class="card"><h2>Hedef dağılım <span class="sub" id="tsum"></span></h2><div class="tg" id="tg"></div><div class="btns"><button class="btn" id="tgS" type="button">Hedefleri kaydet</button></div></div>
+ <div class="card"><h2>Yedek ve aktarım</h2>
+  <p class="note" style="margin:0 0 10px">iPhone ile iPad arasında aktarmak için yedek kodunu kopyala, diğer cihazda yapıştır. Excel'den Varlık · Tür · Adet · Ort. Maliyet sütunlarını kopyalayıp da yapıştırabilirsin.</p>
+  <textarea class="in" id="imp" placeholder="Yedek kodu (PF1:…) ya da Excel satırları"></textarea>
+  <div class="btns"><button class="btn" id="impS" type="button">İçe aktar</button><button class="btn sec" id="expS" type="button">Yedek kodunu kopyala</button></div>
+  <div class="btns"><button class="btn red" id="wipe" type="button">Tüm verileri sil</button></div>
+ </div>
+ </div>
+ </div>
+</section>
+</main>
+
+<nav class="tabs" id="tabs">
+ <button data-v="ozet" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a9 9 0 1 0 9 9h-9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg><span>Özet</span></button>
+ <button data-v="var"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Varlıklar</span></button>
+ <button data-v="isl" class="plus"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><span>İşlem</span></button>
+ <button data-v="ayr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Ayarlar</span></button>
+</nav>
+
+<div class="sheet" id="sheet"><div class="sc" id="sc"></div></div>
+<div class="toast" id="toast"><span id="tmsg"></span><button id="tbtn"></button></div>
+
+<script>
+{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const KEY='pf.v1';
+const PRESET={'S&P':0,'Nasdaq':1,'Altın':2,'Emtia':3,'Tahvil':4,'Momentum':5,'Teknoloji':6,'Özel':7,'Türkiye':8};
+let S={pos:[],tx:[],prices:{},hist:{},realized:0,set:{key:'',pin:'',refresh:60,targets:{},colors:{},hide:false,tab:'ozet'}};
+try{const r=JSON.parse(localStorage.getItem(KEY));if(r&&r.pos)S={...S,...r,set:{...S.set,...(r.set||{})}}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){toast('Kaydedilemedi: tarayıcı hafızası dolu ya da kapalı')}};
+
+const nf=(a,b)=>new Intl.NumberFormat('tr-TR',{minimumFractionDigits:a,maximumFractionDigits:b});
+const N2=nf(2,2),N1=nf(1,1),N0=nf(0,0),NQ=nf(0,4);
+const usd=v=>v==null||!isFinite(v)?'—':(v<0?'-':'')+'$'+N2.format(Math.abs(v));
+const usdK=v=>Math.abs(v)>=1e5?(v<0?'-':'')+'$'+N0.format(Math.abs(v)):usd(v);
+const sUsd=v=>!isFinite(v)?'—':(v>=0?'+':'-')+'$'+N2.format(Math.abs(v));
+const pct=v=>!isFinite(v)?'—':'%'+N1.format(v*100);
+const sPct=v=>!isFinite(v)?'—':(v>=0?'+':'-')+'%'+N2.format(Math.abs(v*100));
+const cls=v=>v>0?'up':v<0?'dn':'';
+const parseNum=s=>{s=String(s??'').trim().replace(/[\s$]/g,'');if(!s)return NaN;
+ if(s.includes(',')&&s.includes('.')){s=s.lastIndexOf(',')>s.lastIndexOf('.')?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'')}else if(s.includes(','))s=s.replace(',','.');
+ return /^-?\d*\.?\d+$/.test(s)?parseFloat(s):NaN};
+const today=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+const fmtD=d=>{const [y,m,dd]=d.split('-');return dd+'.'+m+'.'+y};
+
+function colorOf(t){const c=S.set.colors;if(c[t]==null){const used=new Set(Object.values(c));let k=PRESET[t];if(k==null||used.has(k)){k=0;while(used.has(k)&&k<10)k++;if(used.has(k))k=Object.keys(c).length%11}c[t]=k;save()}return 'var(--c'+c[t]+')'}
+function types(){return [...new Set([...S.pos.map(p=>p.t),...Object.keys(S.set.targets)])]}
+
+/* ---------- hesap ---------- */
+function calc(){
+ const rows=S.pos.map(p=>{const q=S.prices[p.s];const px=q&&q.c>0?q.c:null;const price=px??p.a;
+  const value=p.q*price,cost=p.q*p.a,day=px!=null&&q.pc>0&&q.src!=='manual'?p.q*(px-q.pc):0;
+  return {...p,px,price,value,cost,day,dayP:px!=null&&q.pc>0&&q.src!=='manual'?px/q.pc-1:NaN,pl:value-cost,plP:cost?value/cost-1:0,est:px==null,src:q&&q.src}});
+ const total=rows.reduce((a,r)=>a+r.value,0),cost=rows.reduce((a,r)=>a+r.cost,0),day=rows.reduce((a,r)=>a+r.day,0);
+ rows.forEach(r=>r.w=total?r.value/total:0);
+ const g={};rows.forEach(r=>{(g[r.t]??={t:r.t,value:0,cost:0,day:0,rows:[]});g[r.t].value+=r.value;g[r.t].cost+=r.cost;g[r.t].day+=r.day;g[r.t].rows.push(r)});
+ Object.keys(S.set.targets).forEach(t=>{if(!g[t]&&S.set.targets[t]>0)g[t]={t,value:0,cost:0,day:0,rows:[]}});
+ const groups=Object.values(g).map(x=>({...x,w:total?x.value/total:0,tw:(S.set.targets[x.t]||0)/100})).sort((a,b)=>b.value-a.value||b.tw-a.tw);
+ groups.forEach(x=>x.rows.sort((a,b)=>b.value-a.value));
+ return {rows,total,cost,day,dayP:total-day?day/(total-day):0,pl:total-cost,plP:cost?total/cost-1:0,groups,est:rows.some(r=>r.est)};
+}
+
+/* ---------- piyasa ---------- */
+function market(){const p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'short',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
+ const o=Object.fromEntries(p.map(x=>[x.type,x.value]));const m=+o.hour*60+ +o.minute;const wd=!['Sat','Sun'].includes(o.weekday);
+ return wd&&m>=570&&m<960}
+let busy=false,lastOk=0,lastErr='';
+function setTop(){const on=market();$('#mdot').className='dot'+(on?' on':'');
+ const t=lastOk?new Date(lastOk).toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'}):'';
+ $('#mtxt').textContent=(on?'Piyasa açık':'Piyasa kapalı')+(t?' · '+t:'')}
+async function refresh(manual){
+ if(busy)return;const key=S.set.key;
+ if(!key){if(manual){toast('Önce Ayarlar’dan Finnhub anahtarını ekle');go('ayr')}return}
+ const syms=[...new Set(S.pos.map(p=>p.s))];if(!syms.length)return;
+ busy=true;$('#rf').classList.add('spin');let ok=0,miss=[],err='';
+ for(let i=0;i<syms.length;i+=10){
+  await Promise.all(syms.slice(i,i+10).map(async s=>{
+   try{const r=await fetch('https://finnhub.io/api/v1/quote?symbol='+encodeURIComponent(s)+'&token='+encodeURIComponent(key),{cache:'no-store'});
+    if(r.status===401||r.status===403){err='API anahtarı geçersiz';return}
+    if(r.status===429){err='Sorgu limiti doldu, biraz sonra yenile';return}
+    if(!r.ok){err='Fiyat servisi yanıt vermedi ('+r.status+')';return}
+    const j=await r.json();
+    if(j&&j.c>0){S.prices[s]={c:j.c,pc:j.pc,t:j.t?j.t*1000:Date.now(),src:'api'};ok++}else miss.push(s);
+   }catch(e){err='Bağlantı yok, son fiyatlar gösteriliyor'}}));
+  if(i+10<syms.length)await new Promise(r=>setTimeout(r,400));
+ }
+ busy=false;$('#rf').classList.remove('spin');
+ if(ok){lastOk=Date.now();const c=calc();S.hist[today()]={v:+c.total.toFixed(2),c:+c.cost.toFixed(2)};save()}
+ lastErr=err;render();
+ if(err&&manual)toast(err);else if(manual&&miss.length)toast(miss.join(', ')+' için fiyat bulunamadı, elle girebilirsin');else if(manual&&ok)toast(ok+' ETF fiyatı güncellendi');
+ return {ok,miss,err}}
+let timer=null;
+function schedule(){clearInterval(timer);const r=+S.set.refresh;if(r>0)timer=setInterval(()=>{setTop();if(document.visibilityState==='visible'&&market())refresh()},r*1000)}
+
+/* ---------- görünümler ---------- */
+let cur=S.set.tab||'ozet',selT=null,allocMode='tur',sortBy='value';
+const TT={ozet:'Özet',var:'Varlıklar',isl:'İşlem',ayr:'Ayarlar'};
+function go(v){cur=v;S.set.tab=v;save();$$('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));$$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));$('#ttl').textContent=TT[v];render();scrollTo(0,0)}
+function render(){setTop();document.body.classList.toggle('hide',!!S.set.hide);
+ if(cur==='ozet')rOzet();else if(cur==='var')rVar();else if(cur==='isl')rIsl();else rAyr()}
+
+function banner(){
+ if(!S.pos.length)return `<div class="banner"><div style="flex:1"><b>Portföyünü ekleyerek başla.</b><br>Ayarlar → Yedek ve aktarım alanına sana verilen kodu ya da Excel satırlarını yapıştır.</div><button class="btn" data-go="ayr">Ayarlar</button></div>`;
+ if(!S.set.key)return `<div class="banner"><div style="flex:1"><b>Canlı fiyatlar kapalı.</b> Ücretsiz Finnhub anahtarını eklediğinde fiyatlar otomatik gelir. Şu an maliyet fiyatları gösteriliyor.</div><button class="btn" data-go="ayr">Ekle</button></div>`;
+ if(lastErr)return `<div class="banner"><div style="flex:1">${esc(lastErr)}</div></div>`;
+ return ''}
+
+function rOzet(){const c=calc(),el=$('#v-ozet');
+ if(!S.pos.length){el.innerHTML=banner();return}
+ const cnt=c.rows.length;
+ el.innerHTML=banner()+`
+ <div class="card hero"><div class="lbl">Toplam portföy değeri · ${cnt} ETF</div>
+ <div class="big amt">${usd(c.total)}</div>
+ <div class="chips"><span class="chip ${cls(c.day)}"><span class="amt">${sUsd(c.day)}</span> · ${sPct(c.dayP)} bugün</span><span class="chip ${cls(c.pl)}"><span class="amt">${sUsd(c.pl)}</span> · ${sPct(c.plP)} toplam</span></div>
+ <div class="kv"><div><span class="lbl">Maliyet</span><b class="amt">${usdK(c.cost)}</b></div><div><span class="lbl">Gerçekleşmemiş K/Z</span><b class="amt ${cls(c.pl)}">${sUsd(c.pl)}</b></div><div><span class="lbl">Gerçekleşen K/Z</span><b class="amt ${cls(S.realized)}">${sUsd(S.realized||0)}</b></div></div>
+ ${c.est?'<p class="note">Bazı ETF’lerde canlı fiyat yok; bunlarda ortalama maliyet kullanılıyor.</p>':''}</div>
+ <div class="grid2">
+ <div class="card"><h2>Dağılım<span class="sub"><div class="seg" id="am" style="min-width:150px"><button data-m="tur" class="${allocMode==='tur'?'on':''}">Tür</button><button data-m="etf" class="${allocMode==='etf'?'on':''}">ETF</button></div></span></h2>
+ <div class="donutwrap"><div class="donut ${selT?'sel':''}" id="dn"></div><div class="alloc" id="al"></div></div></div>
+ <div>
+ <div class="card"><h2>Hedefe göre dengeleme</h2><div class="rb" id="rb"></div><p class="note">Hedefleri Ayarlar’dan değiştirebilirsin. Tutarlar bugünkü fiyatlarla hesaplanır.</p></div>
+ <div class="card"><h2>Değer geçmişi<span class="sub" id="hs"></span></h2><div class="fig" id="hf"><svg id="hsv"></svg><div class="tip" id="htip"></div></div></div>
+ </div></div>`;
+ drawDonut(c);drawAlloc(c);drawRb(c);drawHist();
+ $('#am').onclick=e=>{const m=e.target.closest('button')?.dataset.m;if(m){allocMode=m;selT=null;rOzet()}};
+}
+function arc(cx,cy,r0,r1,a0,a1){const p=(r,a)=>[cx+r*Math.sin(a),cy-r*Math.cos(a)];const L=a1-a0>Math.PI?1:0;
+ const [x0,y0]=p(r1,a0),[x1,y1]=p(r1,a1),[x2,y2]=p(r0,a1),[x3,y3]=p(r0,a0);
+ return `M${x0} ${y0}A${r1} ${r1} 0 ${L} 1 ${x1} ${y1}L${x2} ${y2}A${r0} ${r0} 0 ${L} 0 ${x3} ${y3}Z`}
+function segs(c){return allocMode==='tur'?c.groups.filter(g=>g.value>0).map(g=>({id:g.t,v:g.value,w:g.w,col:colorOf(g.t),lab:g.t})):
+ [...c.rows].sort((a,b)=>b.value-a.value).map(r=>({id:r.s,v:r.value,w:r.w,col:colorOf(r.t),lab:r.s}))}
+function drawDonut(c){const el=$('#dn');const ss=segs(c);let a=0,h='';
+ const one=ss.length===1;ss.forEach(s=>{const da=s.w*2*Math.PI;const p=one?`M100 8A92 92 0 1 1 99.99 8L99.99 50A50 50 0 1 0 100 50Z`:arc(100,100,58,96,a,a+da);
+  h+=`<path d="${p}" fill="${s.col}" stroke="var(--sf)" stroke-width="2" data-id="${esc(s.id)}" class="${selT===s.id?'on':''}"/>`;a+=da});
+ const sel=ss.find(s=>s.id===selT);
+ el.innerHTML=`<svg viewBox="0 0 200 200" role="img" aria-label="Portföy dağılımı">${h}</svg><div class="dc">${sel?`<b>${pct(sel.w)}</b><span>${esc(sel.lab)}</span><span class="amt">${usdK(sel.v)}</span>`:`<b class="amt">${usdK(c.total)}</b><span>${ss.length} ${allocMode==='tur'?'tür':'ETF'}</span>`}</div>`;
+ el.onclick=e=>{const id=e.target.dataset?.id;selT=id&&id!==selT?id:null;rOzet()}}
+function drawAlloc(c){const el=$('#al');
+ if(allocMode==='etf'){el.innerHTML=segs(c).map(s=>`<div class="grp ${selT===s.id?'on':''}" data-id="${esc(s.id)}"><div class="gh"><span class="sw" style="background:${s.col}"></span><span class="n">${esc(s.id)}</span><span class="p">${pct(s.w)}</span></div><div class="tbar"><i style="width:${s.w/Math.max(...segs(c).map(x=>x.w))*100}%;background:${s.col}"></i></div><div class="gm"><span class="amt">${usd(s.v)}</span></div></div>`).join('')}
+ else{const mx=Math.max(...c.groups.map(g=>Math.max(g.w,g.tw)),.01);
+ el.innerHTML=c.groups.map(g=>{const d=g.w-g.tw;const col=colorOf(g.t);return `<div class="grp ${selT===g.t?'on':''}" data-id="${esc(g.t)}">
+ <div class="gh"><span class="sw" style="background:${col}"></span><span class="n">${esc(g.t)}</span><span class="p">${pct(g.w)}</span></div>
+ <div class="tbar"><i style="width:${g.w/mx*100}%;background:${col}"></i>${g.tw?`<em style="left:calc(${g.tw/mx*100}% - 1px)"></em>`:''}</div>
+ <div class="gm"><span>${g.tw?'Hedef '+pct(g.tw)+' · <span class="'+(Math.abs(d)<.0005?'':d>0?'up':'dn')+'">'+(d>=0?'+':'-')+N1.format(Math.abs(d*100))+' puan</span>':'Hedef yok'}</span><span class="amt">${usdK(g.value)}</span></div>
+ ${g.rows.length?`<div class="etfs">${g.rows.map(r=>`<div><span><b>${esc(r.s)}</b> · ${pct(r.w)}</span><span class="amt">${usd(r.value)}</span></div>`).join('')}</div>`:''}</div>`}).join('')}
+ el.onclick=e=>{const g=e.target.closest('.grp');if(!g)return;selT=g.dataset.id===selT?null:g.dataset.id;rOzet()}}
+function drawRb(c){const el=$('#rb');const hasT=Object.values(S.set.targets).some(v=>v>0);
+ if(!hasT){el.innerHTML='<div class="empty">Hedef dağılım tanımlı değil. Ayarlar’dan tür bazlı hedef ekle.</div>';return}
+ const tg=c.groups.filter(g=>g.tw>0),base=tg.reduce((a,g)=>a+g.value,0),st=tg.reduce((a,g)=>a+g.tw,0);const free=c.groups.filter(g=>!g.tw&&g.value>0).map(g=>g.t);
+ const it=tg.map(g=>({t:g.t,d:g.tw/st*base-g.value})).filter(x=>Math.abs(x.d)>=1).sort((a,b)=>b.d-a.d);
+ el.innerHTML=it.length?it.map(x=>`<div class="rbr"><span class="sw" style="background:${colorOf(x.t)}"></span><span class="n">${esc(x.t)}</span><span class="lbl">${x.d>0?'Alım':'Satış'}</span><span class="a amt ${x.d>0?'up':'dn'}">${x.d>0?'+':'-'}$${N0.format(Math.abs(x.d))}</span></div>`).join(''):'<div class="empty">Portföy hedefle uyumlu.</div>';
+ if(free.length)el.innerHTML+=`<p class="note" style="margin:4px 0 0">Hedefi olmayan ${free.map(esc).join(', ')} hesaba katılmadı; dengeleme kalan tutar üzerinden yapıldı.</p>`}
+function drawHist(){const s=$('#hsv'),tip=$('#htip');const pts=Object.entries(S.hist).sort((a,b)=>a[0]<b[0]?-1:1).map(([d,o])=>({d,v:o.v,c:o.c}));
+ $('#hs').textContent=pts.length?fmtD(pts[0].d)+' – '+fmtD(pts.at(-1).d):'';
+ if(pts.length<2){$('#hf').innerHTML='<div class="empty">Uygulamayı kullandıkça her gün değer kaydedilir; grafik ikinci günden itibaren oluşur.</div>';return}
+ const draw=()=>{const W=s.clientWidth,H=s.clientHeight;if(!W)return;const pl=8,pr=8,pt=12,pb=22;
+  const vs=pts.flatMap(p=>[p.v,p.c]);let lo=Math.min(...vs),hi=Math.max(...vs);const pad=(hi-lo)*.12||hi*.02;lo-=pad;hi+=pad;
+  const X=i=>pl+(W-pl-pr)*(pts.length===1?.5:i/(pts.length-1)),Y=v=>pt+(H-pt-pb)*(1-(v-lo)/(hi-lo));
+  const ln=k=>pts.map((p,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(p[k]).toFixed(1)).join('');
+  const up=pts.at(-1).v>=pts[0].v;const col=up?'var(--up)':'var(--dn)';
+  s.innerHTML=`<defs><linearGradient id="hg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".22"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>
+  <path d="${ln('v')}L${X(pts.length-1)} ${H-pb}L${X(0)} ${H-pb}Z" fill="url(#hg)"/>
+  <path d="${ln('c')}" fill="none" stroke="var(--mut)" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <path d="${ln('v')}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>
+  <text x="${pl}" y="${H-6}" font-size="11" fill="var(--ink2)">${fmtD(pts[0].d)}</text><text x="${W-pr}" y="${H-6}" font-size="11" fill="var(--ink2)" text-anchor="end">${fmtD(pts.at(-1).d)}</text>
+  <line id="hx" y1="${pt}" y2="${H-pb}" stroke="var(--ink2)" stroke-width="1" opacity="0"/><circle id="hc" r="4.5" fill="${col}" stroke="var(--sf)" stroke-width="2" opacity="0"/>`;
+  const mv=e=>{const r=s.getBoundingClientRect();const x=e.clientX-r.left;const i=Math.max(0,Math.min(pts.length-1,Math.round((x-pl)/(W-pl-pr)*(pts.length-1))));
+   const p=pts[i];s.querySelector('#hx').setAttribute('x1',X(i));s.querySelector('#hx').setAttribute('x2',X(i));s.querySelector('#hx').setAttribute('opacity',1);
+   const cc=s.querySelector('#hc');cc.setAttribute('cx',X(i));cc.setAttribute('cy',Y(p.v));cc.setAttribute('opacity',1);
+   tip.style.display='block';tip.style.left=Math.max(70,Math.min(W-70,X(i)))+'px';tip.style.top=Y(p.v)+'px';
+   tip.textContent=fmtD(p.d)+' · '+(S.set.hide?'•••':usd(p.v))+(p.c?' · '+sPct(p.v/p.c-1):'')};
+  s.onpointermove=mv;s.onpointerdown=mv;s.onpointerleave=()=>{tip.style.display='none';s.querySelector('#hx')?.setAttribute('opacity',0);s.querySelector('#hc')?.setAttribute('opacity',0)}};
+ draw();if(window.hro)hro.disconnect();window.hro=new ResizeObserver(draw);hro.observe(s)}
+
+function rVar(){const c=calc(),el=$('#v-var');
+ if(!S.pos.length){el.innerHTML=banner();return}
+ const k={value:(a,b)=>b.value-a.value,day:(a,b)=>(b.dayP||0)-(a.dayP||0),pl:(a,b)=>b.plP-a.plP,name:(a,b)=>a.s.localeCompare(b.s),type:(a,b)=>a.t.localeCompare(b.t,'tr')||b.value-a.value}[sortBy];
+ const rows=[...c.rows].sort(k);
+ el.innerHTML=banner()+`<div class="bar"><div class="seg" id="so">${[['value','Değer'],['type','Tür'],['day','Gün'],['pl','K/Z'],['name','A-Z']].map(([v,l])=>`<button data-s="${v}" class="${sortBy===v?'on':''}">${l}</button>`).join('')}</div><button class="btn sec" id="cp" style="width:auto;min-height:42px;padding:0 14px;font-size:14.5px">Tabloyu kopyala</button></div>
+ <div class="list"><div class="cols"><span></span><span style="text-align:left">ETF</span><span>Fiyat (E)</span><span>Gün</span><span>Pozisyon (F)</span><span>Ağırlık</span><span>K/Z</span></div>
+ ${rows.map(r=>`<div class="row" data-s="${esc(r.s)}"><div class="tk" style="background:${colorOf(r.t)}">${esc(r.s.slice(0,5))}</div>
+ <div class="rc"><div class="t">${esc(r.s)} <span class="tag">${esc(r.t)}</span></div><div class="s">${NQ.format(r.q)} adet · ${pct(r.w)}<span class="wide"> · ort. ${usd(r.a)}</span></div></div>
+ <div class="rr"><div class="v amt">${usd(r.value)}</div><div class="s">${r.est?'fiyat yok':usd(r.price)} · <span class="${cls(r.dayP)}">${isFinite(r.dayP)?sPct(r.dayP):'—'}</span></div></div>
+ <div class="rc2">${r.est?'<span class="lbl">fiyat yok</span>':usd(r.price)+(r.src==='manual'?' <span class="tag">elle</span>':'')}</div><div class="rc2 ${cls(r.dayP)}">${isFinite(r.dayP)?sPct(r.dayP):'—'}</div><div class="rc2 amt" style="font-weight:650">${usd(r.value)}</div><div class="rc2">${pct(r.w)}</div><div class="rc2 ${cls(r.pl)}"><span class="amt">${sUsd(r.pl)}</span><br><span style="font-size:12.5px">${sPct(r.plP)}</span></div></div>`).join('')}
+ <div class="tot"><span>Toplam</span><span class="amt">${usd(c.total)}</span></div></div>`;
+ $('#so').onclick=e=>{const s=e.target.closest('button')?.dataset.s;if(s){sortBy=s;rVar()}};
+ $('#cp').onclick=()=>{const L=[['Varlık','Tür','Adet','Ort. Maliyet','Fiyat','Pozisyon','Ağırlık (%)','Tür Ağırlık']];
+  const gw=Object.fromEntries(c.groups.map(g=>[g.t,g.w]));const f=v=>String(+v.toFixed(4)).replace('.',',');
+  [...c.rows].sort((a,b)=>a.t.localeCompare(b.t,'tr')).forEach(r=>L.push([r.s,r.t,f(r.q),f(r.a),f(r.price),f(r.value),f(r.w*100),f(gw[r.t]*100)]));
+  copy(L.map(x=>x.join('\t')).join('\n'),'Tablo kopyalandı, Excel’e yapıştırabilirsin')};
+ el.querySelectorAll('.row').forEach(x=>x.onclick=()=>detail(x.dataset.s))}
+
+function detail(s){const c=calc(),r=c.rows.find(x=>x.s===s);if(!r)return;const q=S.prices[s];
+ sheet(`<h3>${esc(r.s)} <span class="tag">${esc(r.t)}</span></h3><div class="lbl">${q?'Fiyat '+(q.src==='manual'?'elle girildi':'Finnhub')+' · '+new Date(q.t).toLocaleString('tr-TR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}):'Canlı fiyat yok'}</div>
+ <div class="dl"><div><span class="lbl">Fiyat (E)</span><b>${r.est?'—':usd(r.price)}</b></div><div><span class="lbl">Pozisyon (F)</span><b class="amt">${usd(r.value)}</b></div>
+ <div><span class="lbl">Adet</span><b>${NQ.format(r.q)}</b></div><div><span class="lbl">Ort. maliyet</span><b>${usd(r.a)}</b></div>
+ <div><span class="lbl">Bugün</span><b class="${cls(r.day)}"><span class="amt">${sUsd(r.day)}</span> · ${isFinite(r.dayP)?sPct(r.dayP):'—'}</b></div><div><span class="lbl">Toplam K/Z</span><b class="${cls(r.pl)}"><span class="amt">${sUsd(r.pl)}</span> · ${sPct(r.plP)}</b></div>
+ <div><span class="lbl">Portföy ağırlığı</span><b>${pct(r.w)}</b></div><div><span class="lbl">Maliyet</span><b class="amt">${usd(r.cost)}</b></div></div>
+ <div class="btns"><button class="btn" data-a="B">Alım ekle</button><button class="btn red" data-a="S">Satış ekle</button></div>
+ <details style="margin-top:16px"><summary class="lbl" style="cursor:pointer;padding:8px 0">Düzelt, fiyatı elle gir veya sil</summary>
+ <div class="two" style="margin-top:8px"><div><label class="l">Adet</label><input class="in" id="eq" inputmode="decimal" value="${esc(String(r.q).replace('.',','))}"></div><div><label class="l">Ort. maliyet</label><input class="in" id="ea" inputmode="decimal" value="${esc(String(r.a).replace('.',','))}"></div></div>
+ <div class="f" style="margin-top:10px"><label class="l">Tür</label><input class="in" id="et" value="${esc(r.t)}" list="tlist"><datalist id="tlist">${types().map(t=>`<option value="${esc(t)}">`).join('')}</datalist></div>
+ <div class="btns"><button class="btn sec" data-a="E">Düzeltmeyi kaydet</button></div>
+ <div class="f" style="margin-top:14px"><label class="l">Elle fiyat ($)</label><input class="in" id="em" inputmode="decimal" placeholder="Canlı fiyat gelmiyorsa"></div>
+ <div class="btns"><button class="btn sec" data-a="M">Fiyatı kaydet</button><button class="btn red" data-a="X">Pozisyonu sil</button></div></details>
+ <div class="btns"><button class="btn sec" data-a="C">Kapat</button></div>`);
+ $('#sc').onclick=e=>{const a=e.target.closest('button')?.dataset.a;if(!a)return;
+  if(a==='C')closeSheet();
+  if(a==='B'||a==='S'){closeSheet();go('isl');setKind(a);$('#fs').value=s;onSym()}
+  if(a==='E'){const nq=parseNum($('#eq').value),na=parseNum($('#ea').value),nt=$('#et').value.trim();if(!(nq>0)||!(na>0)||!nt){toast('Adet, maliyet ve tür gerekli');return}
+   log('D',s,{t:nt,q:nq,a:na},'Düzeltme');closeSheet();render();toast('Pozisyon düzeltildi','Geri al',undo)}
+  if(a==='M'){const v=parseNum($('#em').value);if(!(v>0)){toast('Geçerli bir fiyat gir');return}S.prices[s]={c:v,pc:0,t:Date.now(),src:'manual'};save();closeSheet();render();toast(s+' fiyatı kaydedildi')}
+  if(a==='X')ask(`${esc(s)} pozisyonu silinsin mi?`,'Sil',()=>{log('D',s,null,'Silindi');closeSheet();render();toast(s+' silindi','Geri al',undo)})}}
+
+/* ---------- işlemler ---------- */
+let kind='B';
+function setKind(k){kind=k;$$('#kind button').forEach(b=>b.classList.toggle('on',b.dataset.k===k));$('#fpl').textContent=k==='B'?'Alım fiyatı ($)':'Satış fiyatı ($)';$('#fsub').textContent=k==='B'?'Alımı kaydet':'Satışı kaydet';onSym()}
+function log(k,s,next,note,extra={}){const i=S.pos.findIndex(p=>p.s===s);const prev=i>=0?{...S.pos[i]}:null;
+ S.tx.unshift({id:Date.now(),d:extra.d||today(),k,s,q:extra.q,p:extra.p,rz:extra.rz,note,prev,prevR:S.realized||0,i});
+ if(next){if(i>=0)S.pos[i]={s,...next};else S.pos.push({s,...next})}else if(i>=0)S.pos.splice(i,1);
+ if(extra.rz)S.realized=(S.realized||0)+extra.rz;save()}
+function undo(){const t=S.tx.shift();if(!t)return;const i=S.pos.findIndex(p=>p.s===t.s);
+ if(t.prev){if(i>=0)S.pos[i]=t.prev;else S.pos.splice(Math.min(t.i??S.pos.length,S.pos.length),0,t.prev)}else if(i>=0)S.pos.splice(i,1);
+ S.realized=t.prevR;save();render();toast('İşlem geri alındı')}
+function fillTypes(sel){const ts=types();$('#ft').innerHTML=ts.map(t=>`<option ${t===sel?'selected':''}>${esc(t)}</option>`).join('')+'<option value="__new">+ Yeni tür…</option>';if(!ts.length)$('#ft').value='__new';$('#ftn').style.display=$('#ft').value==='__new'?'block':'none'}
+function onSym(){const s=$('#fs').value.trim().toUpperCase();const p=S.pos.find(x=>x.s===s);
+ if(p){fillTypes(p.t);$('#ft').disabled=true}else{$('#ft').disabled=false;if($('#ft').disabled===false&&!$('#ft').options.length)fillTypes()}
+ $('#ftn').style.display=$('#ft').value==='__new'&&!p?'block':'none';
+ const q=S.prices[s];$('#fhint').innerHTML=(q&&q.c>0?`Güncel fiyat <button type="button" class="lnk" id="usep">${usd(q.c)} kullan</button>`:'')+(p?` Eldeki: ${NQ.format(p.q)} adet · ort. ${usd(p.a)}${kind==='S'?` <button type="button" class="lnk" id="allq">Tümünü sat</button>`:''}`:s?' Yeni ETF':'');
+ $('#usep')&&($('#usep').onclick=()=>{$('#fp').value=String(q.c).replace('.',',');prev()});
+ $('#allq')&&($('#allq').onclick=()=>{$('#fq').value=String(p.q).replace('.',',');prev()});prev()}
+function prev(){const s=$('#fs').value.trim().toUpperCase(),q=parseNum($('#fq').value),px=parseNum($('#fp').value);const p=S.pos.find(x=>x.s===s);const el=$('#fprev');$('#ferr').textContent='';
+ if(!s||!(q>0)||!(px>0)){el.innerHTML='<div><span>ETF, adet ve fiyatı girdiğinde işlemin etkisi burada görünür.</span></div>';$('#fsub').disabled=true;return null}
+ const c=calc();const amt=q*px;let r;
+ if(kind==='B'){const nq=(p?.q||0)+q,na=((p?.q||0)*(p?.a||0)+amt)/nq;const curPx=S.prices[s]?.c>0?S.prices[s].c:px;const nw=nq*curPx/(c.total+q*curPx);r={nq,na,rz:0};el.innerHTML=`<div><span>İşlem tutarı</span><b class="amt">${usd(amt)}</b></div><div><span>Yeni adet</span><b>${NQ.format(nq)}</b></div><div><span>Yeni ort. maliyet</span><b>${usd(na)}</b></div><div><span>Yeni ağırlık</span><b>${pct(nw)}</b></div>`}
+ else{if(!p){$('#ferr').textContent='Bu ETF portföyde yok';$('#fsub').disabled=true;el.innerHTML='';return null}
+  if(q>p.q+1e-9){$('#ferr').textContent='Eldeki adetten fazla satılamaz ('+NQ.format(p.q)+')';$('#fsub').disabled=true;el.innerHTML='';return null}
+  const rz=q*(px-p.a);const nq=p.q-q;r={nq,na:p.a,rz};
+  el.innerHTML=`<div><span>Satış tutarı</span><b class="amt">${usd(amt)}</b></div><div><span>Gerçekleşen K/Z</span><b class="${cls(rz)} amt">${sUsd(rz)}</b></div><div><span>Kalan adet</span><b>${NQ.format(nq)}${nq<1e-9?' · pozisyon kapanır':''}</b></div><div><span>Ort. maliyet</span><b>${usd(p.a)} (değişmez)</b></div>`}
+ $('#fsub').disabled=false;return r}
+function rIsl(){if(!$('#ft').options.length||document.activeElement!==$('#ft'))fillTypes($('#ft').value);$('#syms').innerHTML=S.pos.map(p=>`<option value="${esc(p.s)}">`).join('');if(!$('#fd').value)$('#fd').value=today();onSym();
+ $('#realz').innerHTML=`Gerçekleşen <b class="${cls(S.realized)} amt">${sUsd(S.realized||0)}</b>`;
+ const tx=S.tx.slice(0,60);$('#txl').innerHTML=tx.length?tx.map((t,i)=>`<div class="tx"><span class="k ${t.k}">${t.k==='B'?'ALIM':t.k==='S'?'SATIŞ':'DÜZ.'}</span><div class="m"><b>${esc(t.s)}</b> ${t.k==='D'?'· '+esc(t.note):'· '+NQ.format(t.q)+' × '+usd(t.p)}<div class="d">${fmtD(t.d)}${t.rz?` · K/Z <span class="${cls(t.rz)} amt">${sUsd(t.rz)}</span>`:''}</div></div>${i===0?'<button class="lnk" id="und">Geri al</button>':''}</div>`).join(''):'<div class="empty">Henüz işlem yok. Alım ve satışların burada listelenir.</div>';
+ $('#und')&&($('#und').onclick=()=>ask('Son işlem geri alınsın mı?','Geri al',undo))}
+$('#kind').onclick=e=>{const k=e.target.closest('button')?.dataset.k;if(k)setKind(k)};
+$('#fs').oninput=()=>{const v=$('#fs').value;if(v!==v.toUpperCase())$('#fs').value=v.toUpperCase();onSym()};
+$('#ft').onchange=()=>{$('#ftn').style.display=$('#ft').value==='__new'?'block':'none'};
+['#fq','#fp'].forEach(s=>$(s).oninput=prev);
+$('#txf').onsubmit=e=>{e.preventDefault();const r=prev();if(!r)return;const s=$('#fs').value.trim().toUpperCase();
+ if(!/^[A-Z0-9.\-]{1,10}$/.test(s)){$('#ferr').textContent='Geçersiz ETF sembolü';return}
+ const p=S.pos.find(x=>x.s===s);let t=p?p.t:($('#ft').value==='__new'?$('#ftn').value.trim():$('#ft').value);if(!t){$('#ferr').textContent='Tür seç ya da yeni tür yaz';return}
+ const q=parseNum($('#fq').value),px=parseNum($('#fp').value),d=$('#fd').value||today();
+ log(kind,s,r.nq>1e-9?{t,q:+r.nq.toFixed(6),a:+r.na.toFixed(6)}:null,'',{q,p:px,rz:kind==='S'?+r.rz.toFixed(2):0,d});
+ $('#fq').value='';$('#fp').value='';$('#fs').value='';render();toast((kind==='B'?'Alım':'Satış')+' kaydedildi: '+s,'Geri al',undo);
+ if(!S.prices[s]&&S.set.key)refresh()};
+
+/* ---------- ayarlar ---------- */
+function rAyr(){$('#key').value=S.set.key||'';$$('#ref button').forEach(b=>b.classList.toggle('on',+b.dataset.r===+S.set.refresh));
+ $('#pinI').textContent=S.set.pin?'PIN etkin.':'PIN belirlenmedi.';$('#pinX').style.display=S.set.pin?'':'none';
+ const ts=types();$('#tg').innerHTML=ts.length?ts.map(t=>`<label for="tg-${esc(t)}" style="display:flex;gap:8px;align-items:center"><span class="sw" style="background:${colorOf(t)}"></span>${esc(t)}</label><input class="in" id="tg-${esc(t)}" data-t="${esc(t)}" inputmode="decimal" value="${S.set.targets[t]?String(S.set.targets[t]).replace('.',','):''}" placeholder="0">`).join('')+`<input class="in" id="tgn" placeholder="Yeni tür (örn. Kripto)" style="text-align:left"><input class="in" id="tgnv" inputmode="decimal" placeholder="%">`:'<div class="empty">Önce portföy ekle.</div>';
+ const upd=()=>{let s=0;$$('#tg input[data-t]').forEach(i=>s+=parseNum(i.value)||0);s+=parseNum($('#tgnv')?.value)||0;$('#tsum').innerHTML=`Toplam <b class="${Math.abs(s-100)<.01?'up':'dn'}">%${N1.format(s)}</b>`};
+ $('#tg').oninput=upd;upd()}
+$('#ref').onclick=e=>{const r=e.target.closest('button')?.dataset.r;if(r==null)return;S.set.refresh=+r;save();schedule();rAyr()};
+$('#keyS').onclick=async()=>{S.set.key=$('#key').value.trim();save();if(!S.set.key){toast('Anahtar silindi');return}
+ if(!S.pos.length){toast('Anahtar kaydedildi');return}const r=await refresh();if(r&&r.ok)toast('Bağlantı başarılı: '+r.ok+' ETF fiyatı alındı');else toast(r?.err||'Fiyat alınamadı, anahtarı kontrol et')};
+async function hash(p){const d=new TextEncoder().encode('pf-salt:'+p);try{const h=await crypto.subtle.digest('SHA-256',d);return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('')}catch(e){let h=2166136261;for(const b of d){h^=b;h=Math.imul(h,16777619)}return 'f'+(h>>>0).toString(16)}}
+$('#pinS').onclick=async()=>{const a=$('#pin1').value,b=$('#pin2').value;if(!/^\d{4}$/.test(a)){toast('PIN 4 rakam olmalı');return}if(a!==b){toast('PIN’ler eşleşmiyor');return}
+ S.set.pin=await hash(a);save();$('#pin1').value=$('#pin2').value='';rAyr();toast('PIN belirlendi')};
+$('#pinX').onclick=()=>ask('PIN kilidi kaldırılsın mı?','Kaldır',()=>{S.set.pin='';save();rAyr();toast('PIN kaldırıldı')});
+$('#tgS').onclick=()=>{const t={};$$('#tg input[data-t]').forEach(i=>{const v=parseNum(i.value);if(v>0)t[i.dataset.t]=v});const nn=$('#tgn')?.value.trim(),nv=parseNum($('#tgnv')?.value);if(nn&&nv>0)t[nn]=nv;
+ S.set.targets=t;save();rAyr();const s=Object.values(t).reduce((a,b)=>a+b,0);toast(Math.abs(s-100)<.01?'Hedefler kaydedildi':'Kaydedildi; toplam %'+N1.format(s)+', 100 olmalı')};
+function b64e(s){return btoa(String.fromCharCode(...new TextEncoder().encode(s)))}
+function b64d(s){return new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0)))}
+$('#expS').onclick=()=>{const o={pos:S.pos,tx:S.tx,hist:S.hist,realized:S.realized,targets:S.set.targets,colors:S.set.colors};copy('PF1:'+b64e(JSON.stringify(o)),'Yedek kodu kopyalandı')};
+$('#impS').onclick=()=>{const v=$('#imp').value.trim();if(!v)return;
+ if(v.startsWith('PF1:')){let o;try{o=JSON.parse(b64d(v.slice(4).replace(/\s/g,'')))}catch(e){toast('Kod okunamadı, eksiksiz kopyaladığından emin ol');return}
+  if(!Array.isArray(o.pos)){toast('Geçersiz kod');return}
+  ask(`${o.pos.length} ETF içeren yedek yüklensin mi? Bu cihazdaki portföyün yerini alır.`,'Yükle',()=>{S.pos=o.pos.filter(p=>p&&p.s&&p.q>0).map(p=>({s:String(p.s).toUpperCase(),t:String(p.t||'Diğer'),q:+p.q,a:+p.a}));S.tx=Array.isArray(o.tx)?o.tx:[];S.hist=o.hist||{};S.realized=+o.realized||0;if(o.targets)S.set.targets=o.targets;if(o.colors)S.set.colors=o.colors;save();$('#imp').value='';go('ozet');toast('Portföy yüklendi');refresh()});return}
+ const rows=v.split(/\r?\n/).map(l=>l.split(/\t|;|\s{2,}/).map(x=>x.trim())).filter(c=>c.length>=4&&parseNum(c[2])>0&&parseNum(c[3])>0);
+ if(!rows.length){toast('Satır bulunamadı. Sütunlar: Varlık, Tür, Adet, Ort. Maliyet');return}
+ ask(`Excel’den ${rows.length} satır bulundu. Mevcut portföyün yerini alsın mı?`,'Yükle',()=>{S.pos=rows.map(c=>({s:c[0].toUpperCase(),t:c[1]||'Diğer',q:parseNum(c[2]),a:parseNum(c[3])}));S.tx=[];S.realized=0;save();$('#imp').value='';go('ozet');toast('Portföy yüklendi');refresh()})};
+$('#wipe').onclick=()=>ask('Bu cihazdaki tüm portföy verisi, geçmiş ve ayarlar silinsin mi? Geri alınamaz.','Hepsini sil',()=>{try{localStorage.removeItem(KEY)}catch(e){}location.reload()});
+
+/* ---------- ortak ---------- */
+function sheet(h){$('#sc').innerHTML='<div class="grab"></div>'+h;$('#sheet').classList.add('on')}
+function closeSheet(){$('#sheet').classList.remove('on');$('#sc').onclick=null}
+$('#sheet').onclick=e=>{if(e.target.id==='sheet')closeSheet()};
+function ask(msg,ok,fn){sheet(`<h3 style="font-size:17px;font-weight:600;line-height:1.4">${msg}</h3><div class="btns"><button class="btn sec" data-a="n">Vazgeç</button><button class="btn" data-a="y">${esc(ok)}</button></div>`);
+ $('#sc').onclick=e=>{const a=e.target.closest('button')?.dataset.a;if(!a)return;closeSheet();if(a==='y')fn()}}
+let tt;function toast(m,bt,fn){$('#tmsg').textContent=m;const b=$('#tbtn');b.textContent=bt||'';b.style.display=bt?'':'none';b.onclick=()=>{$('#toast').classList.remove('on');fn&&fn()};$('#toast').classList.add('on');clearTimeout(tt);tt=setTimeout(()=>$('#toast').classList.remove('on'),bt?6000:3200)}
+async function copy(t,m){try{await navigator.clipboard.writeText(t);toast(m)}catch(e){sheet(`<h3>Kopyala</h3><p class="lbl">Otomatik kopyalama engellendi. Metni seçip kopyala:</p><textarea class="in" readonly style="min-height:160px">${esc(t)}</textarea><div class="btns"><button class="btn sec" data-a="C" onclick="this.closest('.sheet').classList.remove('on')">Kapat</button></div>`);$('#sc textarea').select()}}
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g)go(g.dataset.go)});
+$('#tabs').onclick=e=>{const b=e.target.closest('button');if(b)go(b.dataset.v)};
+$('#rf').onclick=()=>refresh(true);
+$('#eye').onclick=()=>{S.set.hide=!S.set.hide;save();render()};
+
+/* ---------- kilit ---------- */
+let pinBuf='',hidAt=0;
+function lock(){if(!S.set.pin)return;pinBuf='';drawPin();$('#lock').classList.add('on')}
+function drawPin(){$$('#pd i').forEach((i,k)=>i.classList.toggle('f',k<pinBuf.length))}
+$('#pad').onclick=async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.x){pinBuf=pinBuf.slice(0,-1);drawPin();return}
+ if(pinBuf.length>=4)return;pinBuf+=b.textContent;drawPin();
+ if(pinBuf.length===4){if(await hash(pinBuf)===S.set.pin){$('#lock').classList.remove('on');pinBuf='';refresh()}else{const p=$('#pd');p.classList.add('bad');setTimeout(()=>{p.classList.remove('bad');pinBuf='';drawPin()},400)}}};
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')hidAt=Date.now();else{if(hidAt&&Date.now()-hidAt>120000)lock();else if(Date.now()-lastOk>60000)refresh();setTop()}});
+
+go(cur);schedule();
+if(S.set.pin)lock();else refresh();
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
