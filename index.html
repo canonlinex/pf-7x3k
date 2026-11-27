@@ -166,6 +166,29 @@ body.hide .amt{filter:blur(7px)}
 .tg2{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:8px 10px;align-items:center}.tg2 .in{min-height:42px;font-size:16px;text-align:right;padding:6px 10px}
 a{color:var(--ac)}ol.steps{padding-left:20px;margin:6px 0 10px;font-size:14.5px;color:var(--ink2)}ol.steps li{margin:3px 0}
 .sec-t{font-size:13px;font-weight:650;color:var(--ink2);margin:16px 0 8px}
+.al{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;margin-bottom:8px;font-size:14.5px}
+.al.bad{background:color-mix(in srgb,var(--dn) 11%,var(--sf))}.al.near{background:color-mix(in srgb,var(--warn) 12%,var(--sf))}
+.al .ic{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-weight:800;font-size:13px;flex:none;color:#fff}.al.bad .ic{background:var(--dn)}.al.near .ic{background:var(--warn)}
+.tabs button{position:relative}.badge{position:absolute;top:3px;left:calc(50% + 6px);width:10px;height:10px;border-radius:50%;background:var(--dn);border:2px solid var(--sf);display:none}.badge.on{display:block}
+.sw2{position:relative;width:46px;height:28px;flex:none;display:block}.sw2 input{opacity:0;position:absolute;inset:0;margin:0;cursor:pointer;z-index:1}.sw2 span{position:absolute;inset:0;border-radius:14px;background:var(--line);transition:.2s}.sw2 span::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.2s}.sw2 input:checked+span{background:var(--up)}.sw2 input:checked+span::after{transform:translateX(18px)}
+.rl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;padding:12px 0;border-top:1px solid var(--line);font-size:15px}.rl:first-child{border-top:0}
+.rl .pr2{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}.rl .pr2 .in{min-height:40px;width:90px;font-size:16px;padding:6px 10px;text-align:right}.rl .pr2 select.in{width:auto;text-align:left}
+.ne3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.ne3 b{display:block;font-size:18px;white-space:nowrap}
+.mv{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}@media(max-width:480px){.mv{grid-template-columns:1fr;gap:6px}}
+.mvl>div{display:flex;justify-content:space-between;gap:8px;font-size:14.5px;padding:3px 0}.mvl b{white-space:nowrap}
+.ws{display:grid;gap:7px}.ws>div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;font-size:14.5px}.ws b{white-space:nowrap}
+.chipsx{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:10px;scrollbar-width:none}.chipsx::-webkit-scrollbar{display:none}
+.chipsx button{flex:none;border:1px solid var(--line);background:var(--sf2);border-radius:20px;padding:8px 14px;font-size:14px;font-weight:600;white-space:nowrap;min-height:38px}.chipsx button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.fx{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}@media(max-width:600px){.fx{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fx label{font-size:12.5px;color:var(--ink2);font-weight:600;display:block;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.fx .in{min-height:44px;font-size:16px;padding:6px 44px 6px 10px}
+.fxu{position:relative}.fxu small{position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--ink2);font-size:13px;pointer-events:none}
+.sres{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:20px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}@media(max-width:700px){.sres{grid-template-columns:1fr}}
+.sbig{font-size:clamp(30px,7vw,40px);font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:2px 0 6px;white-space:nowrap}
+.sk{display:grid;gap:6px;margin-top:12px}.sk>div{display:flex;justify-content:space-between;gap:10px;font-size:14.5px}.sk span{color:var(--ink2)}.sk b{white-space:nowrap}
+.db{display:grid;gap:9px}.db .r{display:grid;grid-template-columns:minmax(0,90px) minmax(0,1fr) auto;gap:10px;align-items:center;font-size:13.5px}
+.db .t2{position:relative;height:10px}.db .t2::before{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;width:1px;background:var(--ink2);opacity:.4}
+.db .t2 i{position:absolute;top:0;bottom:0;border-radius:3px}.db .r b{text-align:right;white-space:nowrap;min-width:84px}
+.etl{display:grid;gap:4px;margin-top:8px}.etl>div{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;font-size:13.5px;padding:3px 0}.etl span{color:var(--ink2)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -207,7 +230,7 @@ a{color:var(--ac)}ol.steps{padding-left:20px;margin:6px 0 10px;font-size:14.5px;
 </main>
 
 <nav class="tabs" id="tabs">
- <button data-v="ozet" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/></svg><span>Özet</span></button>
+ <button data-v="ozet" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/></svg><span>Özet</span><i class="badge" id="bdg"></i></button>
  <button data-v="var"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Varlıklar</span></button>
  <button data-v="isl" class="plus"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><span>İşlem</span></button>
  <button data-v="ana"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-7"/></svg><span>Analiz</span></button>
@@ -226,7 +249,7 @@ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const K1='pf.v1',K2='pf.v2e',KM='pf.meta',DAY=864e5;
 const ld=k=>{try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}};
 const st=(k,v)=>{try{if(v==null)localStorage.removeItem(k);else localStorage.setItem(k,typeof v==='string'?v:JSON.stringify(v));return true}catch(e){return false}};
-const DEF=()=>({pos:[],tx:[],prices:{},hist:{},realized:0,netIn:null,lastBk:0,txSinceBk:0,set:{key:'',refresh:60,targets:{},colors:{},hide:false,tab:'ozet',band:5,pref:{}}});
+const DEF=()=>({pos:[],tx:[],prices:{},hist:{},realized:0,netIn:null,lastBk:0,txSinceBk:0,rules:null,peaks:{},lastRebal:0,set:{key:'',refresh:60,targets:{},colors:{},hide:false,tab:'ozet',band:5,pref:{}}});
 const merge=o=>{const d=DEF();o=o||{};return {...d,...o,set:{...d.set,...(o.set||{})}}};
 let M={theme:'auto',pinLen:4,bio:false,fails:0,until:0,...(ld(KM)||{})};
 const saveM=()=>st(KM,M);
@@ -244,8 +267,8 @@ const pp=v=>(v>=0?'+':MI)+N1.format(Math.abs(v*100))+' puan';
 const cls=v=>v>0.00005?'up':v<-0.00005?'dn':'';
 const parseNum=s=>{s=String(s??'').trim().replace(/[\s$]/g,'');if(!s)return NaN;
  if(s.includes(',')&&s.includes('.')){s=s.lastIndexOf(',')>s.lastIndexOf('.')?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'')}else if(s.includes(','))s=s.replace(',','.');
- return /^-?\d*\.?\d+$/.test(s)?parseFloat(s):NaN};
-const today=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+ s=s.replace(/^\+/,'');return /^-?\d*\.?\d+$/.test(s)?parseFloat(s):NaN};
+const isoD=d=>new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);const today=()=>isoD(new Date());const daysAgo=n=>isoD(new Date(Date.now()-n*864e5));
 const fmtD=d=>{const [y,m,dd]=d.split('-');return dd+'.'+m+'.'+y};
 const ago=t=>{const s=(Date.now()-t)/1000;return s<90?'az önce':s<3600?Math.round(s/60)+' dk önce':s<86400?Math.round(s/3600)+' sa önce':Math.round(s/86400)+' gün önce'};
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>';
@@ -331,7 +354,9 @@ async function refresh(manual){
  lastErr=err;render();
  if(err&&manual)toast(err);else if(manual&&miss.length)toast(miss.join(', ')+' için fiyat bulunamadı, elle girebilirsin');else if(manual&&ok)toast(ok+' fiyat güncellendi')}
 function snapshot(){const c=calc();if(!c.rows.length)return;if(S.netIn==null)S.netIn=+c.cost.toFixed(2);
- S.hist[today()]={v:+c.total.toFixed(2),c:+c.cost.toFixed(2),n:+S.netIn.toFixed(2),b:S.prices.SPY&&S.prices.SPY.src==='api'?S.prices.SPY.c:undefined}}
+ S.hist[today()]={v:+c.total.toFixed(2),c:+c.cost.toFixed(2),n:+S.netIn.toFixed(2),b:S.prices.SPY&&S.prices.SPY.src==='api'?S.prices.SPY.c:undefined,
+  e:Object.fromEntries(c.rows.filter(r=>!r.est).map(r=>[r.s,[+r.q.toFixed(6),+r.price.toFixed(4)]]))};updatePeaks()}
+function updatePeaks(){S.peaks=S.peaks||{};for(const p of S.pos){const q=S.prices[p.s];if(q&&q.src==='api'&&q.c>0){const k=S.peaks[p.s];if(!k||q.c>k.p)S.peaks[p.s]={p:q.c,d:today()}}}}
 let timer=null;
 function schedule(){clearInterval(timer);const r=+S.set.refresh;if(r>0)timer=setInterval(()=>{setTop();if(document.visibilityState==='visible'&&market())refresh()},r*1000)}
 
@@ -339,7 +364,7 @@ function schedule(){clearInterval(timer);const r=+S.set.refresh;if(r>0)timer=set
 let cur='ozet',selT=null,allocMode='tur',sortBy='value',perfP='all',perfMode='ret';
 const TT={ozet:'Özet',var:'Varlıklar',isl:'İşlem',ana:'Analiz',ayr:'Ayarlar'};
 function go(v){cur=v;S.set.tab=v;save();$$('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));$$('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));$('#ttl').textContent=TT[v];render();scrollTo(0,0)}
-function render(){if(locked)return;setTop();document.body.classList.toggle('hide',!!S.set.hide);({ozet:rOzet,var:rVar,isl:rIsl,ana:rAna,ayr:rAyr})[cur]()}
+function render(){if(locked)return;setTop();document.body.classList.toggle('hide',!!S.set.hide);try{$('#bdg').classList.toggle('on',S.pos.length>0&&evalRules(calc()).some(x=>x.l==='bad'))}catch(e){}({ozet:rOzet,var:rVar,isl:rIsl,ana:rAna,ayr:rAyr})[cur]()}
 
 function needBk(){return S.pos.length&&(!S.lastBk||Date.now()-S.lastBk>7*DAY||S.txSinceBk>=3)}
 function banner(){
@@ -357,6 +382,7 @@ function rOzet(){const c=calc(),el=$('#v-ozet');
  <div class="chips"><span class="chip"><span class="${cls(c.day)}"><span class="amt">${sUsd(c.day)}</span> · ${arw(c.dayP)}</span> <span class="lbl">bugün</span></span><span class="chip"><span class="${cls(c.pl)}"><span class="amt">${sUsd(c.pl)}</span> · ${arw(c.plP)}</span> <span class="lbl">toplam</span></span></div>
  <div class="kv"><div><span class="lbl">Maliyet</span><b class="amt">${usdK(c.cost)}</b></div><div><span class="lbl">Gerçekleşmemiş</span><b class="amt ${cls(c.pl)}">${sUsd(c.pl)}</b></div><div><span class="lbl">Gerçekleşen</span><b class="amt ${cls(S.realized)}">${sUsd(S.realized||0)}</b></div></div>
  ${c.est?'<p class="note" style="color:var(--heroInk2)">Bazı ETF’lerde canlı fiyat yok; bunlarda ortalama maliyet kullanılıyor.</p>':''}</div>
+ ${rulesCard(c)}${neCard(c)}
  <div class="grid2">
  <div class="card"><h2>Bugün<span class="sub">${market()?'Canlı':'Son işlem günü'} · ağırlığa göre</span></h2><div class="heat" id="heat"></div>
  <div class="legend"><span>▼ %3</span><i style="background:color-mix(in srgb,var(--dn) 85%,var(--sf2))"></i><i style="background:color-mix(in srgb,var(--dn) 40%,var(--sf2))"></i><i style="background:var(--sf2)"></i><i style="background:color-mix(in srgb,var(--up) 40%,var(--sf2))"></i><i style="background:color-mix(in srgb,var(--up) 85%,var(--sf2))"></i><span>▲ %3</span></div></div>
@@ -364,7 +390,9 @@ function rOzet(){const c=calc(),el=$('#v-ozet');
  </div>
  <div class="card"><h2>Dengeleme<span class="sub"><button class="btn sm" id="nm" style="min-height:38px">Yeni para nereye?</button></span></h2><div class="rb" id="rb"></div></div>`;
  drawHeat(c);drawTV(c);drawRb(c);
- $('#nm').onclick=()=>newMoney()}
+ $('#nm').onclick=()=>newMoney();$('#rEd').onclick=()=>rulesSheet();
+ $('#neS').onclick=e=>{const p=e.target.closest('button')?.dataset.p;if(p){neP=p;rOzet()}};
+ el.querySelectorAll('[data-ack]').forEach(b=>b.onclick=()=>{S.lastRebal=Date.now();save();render();toast('Dengeleme kontrolü kaydedildi')})}
 
 /* ---- ısı haritası ---- */
 function squarify(items,x,y,w,h){const out=[];let rest=items.slice();
@@ -515,11 +543,12 @@ function rAna(){const c=calc(),el=$('#v-ana');if(!S.pos.length){el.innerHTML=ban
  <div class="leg2"><span><i style="background:var(--ac)"></i>${perfMode==='ret'?'Portföy':'Portföy değeri'}</span><span><i style="background:var(--mut)"></i>${perfMode==='ret'?'S&P 500 (SPY)':'Net yatırılan'}</span></div>
  <p class="note">Zaman ağırlıklı getiri yeni para girişlerinin etkisini ayıklar; para ağırlıklı getiri senin zamanlamanı da içerir${P.span<30?' ve en az 30 günlük veri gerektirir':''}. Uygulamayı açtığın günler kaydedilir.</p>`
  :`<div class="empty">Performans, uygulamayı en az iki farklı günde açtığında hesaplanmaya başlar. Fiyatlar her yenilendiğinde günün değeri kaydedilir.</div>`}</div>
+ ${scCard()}
  <div class="grid2"><div class="card" id="ovl"></div><div class="card"><h2>Dağılım<span class="sub"><div class="seg" id="am" style="min-width:150px"><button data-m="tur" class="${allocMode==='tur'?'on':''}">Tür</button><button data-m="etf" class="${allocMode==='etf'?'on':''}">ETF</button></div></span></h2>
  <div class="donutwrap"><div class="donut ${selT?'sel':''}" id="dn"></div><div id="al"></div></div></div></div>`;
  $('#pp').onclick=e=>{const p=e.target.closest('button')?.dataset.p;if(p){perfP=p;rAna()}};
  if(P){$('#pm').onclick=e=>{const m=e.target.closest('button')?.dataset.m;if(m){perfMode=m;rAna()}};drawPerf(P)}
- drawOverlap(c);drawDonut(c);drawAlloc(c);
+ drawOverlap(c);drawDonut(c);drawAlloc(c);bindSc(c);
  $('#am').onclick=e=>{const m=e.target.closest('button')?.dataset.m;if(m){allocMode=m;selT=null;rAna()}}}
 
 function drawPerf(P){const s=$('#psv'),tip=$('#ptip');const pts=P.pts;const ret=perfMode==='ret';
@@ -564,6 +593,111 @@ function drawAlloc(c){const el=$('#al');
  else el.innerHTML=c.groups.filter(g=>g.value>0).map(g=>`<div class="grp ${selT===g.t?'on':''}" data-id="${esc(g.t)}"><div class="gh"><span class="sw" style="background:${colorOf(g.t)}"></span><span class="n">${esc(g.t)}</span><span class="p">${pct(g.w)}</span></div>
  <div class="etfs">${g.rows.map(r=>`<div><span><b>${esc(r.s)}</b> · ${pct(r.w)}</span><span class="amt">${usdK(r.value)}</span></div>`).join('')}</div></div>`).join('');
  el.onclick=e=>{const g=e.target.closest('.grp');if(!g)return;selT=g.dataset.id===selT?null:g.dataset.id;rAna()}}
+
+/* ================= kurallar ================= */
+const RDEF=()=>[{id:'etf',k:'maxEtf',on:true,v:20},{id:'typ',k:'maxType',on:false,v:45,t:'S&P'},{id:'m7',k:'mag7',on:true,v:25},{id:'co',k:'maxCo',on:false,v:8},{id:'bnd',k:'band',on:true,v:0},{id:'rb',k:'rebal',on:true,v:3},{id:'dd',k:'ddEtf',on:true,v:15},{id:'pdd',k:'ddPort',on:false,v:10}];
+const RLAB={maxEtf:['Tek bir ETF portföyün en fazla','%'],maxType:['Bir tür portföyün en fazla','%'],mag7:['Yedi büyük teknoloji şirketine fonlar üzerinden maruziyet en fazla','%'],maxCo:['Tek bir şirkete fonlar üzerinden maruziyet en fazla','%'],
+ band:['Hedef bandı dışına çıkan tür olursa uyar',''],rebal:['Dengeleme kontrolü sıklığı','ayda bir'],ddEtf:['Bir ETF zirvesinden bu kadar düşerse uyar','%'],ddPort:['Portföy (zaman ağırlıklı) zirvesinden bu kadar düşerse uyar','%']};
+function rules(){if(!Array.isArray(S.rules)){S.rules=RDEF();save()}const ids=new Set(S.rules.map(r=>r.id));RDEF().forEach(r=>{if(!ids.has(r.id))S.rules.push({...r,on:false})});return S.rules}
+function lookThrough(c){const ex={};c.rows.forEach(r=>{const h=HOLD[r.s];if(h)Object.entries(h).forEach(([k,w])=>ex[k]=(ex[k]||0)+r.w*w/100)});return ex}
+function portIdx(){const pts=perfPts();if(pts.length<2)return null;const idx=[1];for(let i=1;i<pts.length;i++){const fl=pts[i].n-pts[i-1].n,r=pts[i-1].v>0?(pts[i].v-fl)/pts[i-1].v:1;idx.push(idx[i-1]*r)}return idx}
+const P0=v=>'%'+N0.format(v);
+function evalRules(c){const out=[];if(!c.rows.length)return out;const R=rules();
+ for(const r of R){if(!r.on)continue;const v=(+r.v||0)/100;const L=(l,t,d,act)=>out.push({id:r.id,l,t,d,act});
+  if(r.k==='maxEtf'){const bad=c.rows.filter(x=>x.w>v),near=c.rows.filter(x=>x.w<=v&&x.w>=v*0.9);
+   if(bad.length)L('bad','Tek ETF sınırı ('+P0(r.v)+') aşıldı',bad.map(x=>x.s+' '+pct(x.w)).join(' · '));
+   else if(near.length)L('near','Tek ETF sınırına ('+P0(r.v)+') yaklaşıldı',near.map(x=>x.s+' '+pct(x.w)).join(' · '));else L('ok','Tek ETF sınırı')}
+  else if(r.k==='maxType'){const g=c.groups.find(x=>x.t===r.t);const w=g?g.w:0;
+   if(w>v)L('bad',r.t+' türü sınırı ('+P0(r.v)+') aşıldı',r.t+' '+pct(w));else if(w>=v*0.9)L('near',r.t+' türü sınırına ('+P0(r.v)+') yaklaşıldı',r.t+' '+pct(w));else L('ok','Tür sınırı')}
+  else if(r.k==='mag7'){const ex=lookThrough(c),m=MAG7.reduce((a,k)=>a+(ex[k]||0),0);
+   if(m>v)L('bad','Yedi büyük teknoloji şirketi sınırı ('+P0(r.v)+') aşıldı','Tahmini maruziyet '+pct(m));else if(m>=v*0.9)L('near','Yedi büyük teknoloji şirketi sınırına ('+P0(r.v)+') yaklaşıldı','Tahmini maruziyet '+pct(m));else L('ok','Teknoloji yoğunlaşması')}
+  else if(r.k==='maxCo'){const ex=lookThrough(c);const top=Object.entries(ex).sort((a,b)=>b[1]-a[1]);const bad=top.filter(x=>x[1]>v),near=top.filter(x=>x[1]<=v&&x[1]>=v*0.9);
+   if(bad.length)L('bad','Tek şirket sınırı ('+P0(r.v)+') aşıldı',bad.map(x=>(CN[x[0]]||x[0])+' '+pct(x[1])).join(' · '));else if(near.length)L('near','Tek şirket sınırına ('+P0(r.v)+') yaklaşıldı',near.map(x=>(CN[x[0]]||x[0])+' '+pct(x[1])).join(' · '));else L('ok','Tek şirket sınırı')}
+  else if(r.k==='band'){const b=S.set.band/100;const o=c.groups.filter(g=>g.tw>0&&Math.abs(g.w-g.tw)>b+1e-9);
+   if(o.length)L('bad','Hedef bandı dışında '+o.length+' tür var',o.map(g=>g.t+' '+pp(g.w-g.tw)).join(' · '));else L('ok','Hedef bantları')}
+  else if(r.k==='rebal'){const last=S.lastRebal||Date.now(),due=last+(+r.v||3)*30.44*DAY,left=Math.ceil((due-Date.now())/DAY);
+   if(left<=0)L('bad','Dengeleme kontrolü zamanı geldi','Son kontrol: '+fmtD(isoD(new Date(last))),'Kontrol ettim');
+   else if(left<=14)L('near','Dengeleme kontrolüne '+left+' gün kaldı','Son kontrol: '+fmtD(isoD(new Date(last))),'Şimdi kontrol ettim');else L('ok','Dengeleme takvimi')}
+  else if(r.k==='ddEtf'){const bad=[],near=[];c.rows.forEach(x=>{const pk=S.peaks&&S.peaks[x.s];if(!pk||x.px==null||x.src!=='api')return;const dd=x.px/pk.p-1;const s=x.s+' '+arw(dd)+' (zirve '+usd(pk.p)+', '+fmtD(pk.d)+')';if(dd<=-v)bad.push(s);else if(dd<=-v*0.8)near.push(s)});
+   if(bad.length)L('bad','Zirveden düşüş sınırını ('+P0(r.v)+') aşan ETF var',bad.join(' · '));else if(near.length)L('near','Zirveden düşüş sınırına ('+P0(r.v)+') yaklaşan ETF var',near.join(' · '));else L('ok','ETF düşüş uyarısı')}
+  else if(r.k==='ddPort'){const idx=portIdx();if(!idx){L('ok','Portföy düşüş uyarısı');continue}const pk=Math.max(...idx),dd=idx.at(-1)/pk-1;
+   if(dd<=-v)L('bad','Portföy zirvesinden '+arw(dd)+' aşağıda','Sınır '+P0(r.v));else if(dd<=-v*0.8)L('near','Portföy düşüşü sınıra yaklaştı',arw(dd)+' · sınır '+P0(r.v));else L('ok','Portföy düşüş uyarısı')}}
+ return out}
+function rulesCard(c){const ev=evalRules(c);const on=ev.length;const list=[...ev.filter(x=>x.l==='bad'),...ev.filter(x=>x.l==='near')];const okN=ev.filter(x=>x.l==='ok').length;
+ return `<div class="card"><h2>Kurallarım<span class="sub"><button class="lnk" id="rEd">Düzenle</button></span></h2>
+ ${list.map(x=>`<div class="al ${x.l}"><span class="ic">${x.l==='bad'?'!':'~'}</span><div style="flex:1"><b>${esc(x.t)}</b>${x.d?`<div class="lbl">${esc(x.d)}</div>`:''}${x.act?`<button class="lnk" data-ack="1" style="margin-top:8px">${esc(x.act)}</button>`:''}</div></div>`).join('')}
+ ${on?(list.length?`<div class="lbl" style="margin-top:4px">${okN} / ${on} kural sağlanıyor</div>`:`<div class="ok">${CHECK}<span>${on} kuralın tamamı sağlanıyor.</span></div>`):'<div class="empty" style="padding:8px">Açık kural yok. “Düzenle” ile kendi kurallarını belirle.</div>'}</div>`}
+function rulesSheet(){const R=JSON.parse(JSON.stringify(rules()));const ts=types();
+ sheet(`<h3>Kurallarım</h3><div class="lbl">Sınırları sen belirlersin; uygulama yalnızca ihlal olduğunda ya da sınıra yaklaşıldığında (%90) uyarır.</div><div id="rlst" style="margin-top:8px">${R.map((r,i)=>`<div class="rl"><label class="sw2"><input type="checkbox" data-i="${i}" ${r.on?'checked':''} aria-label="${RLAB[r.k][0]}"><span></span></label><div><b style="font-weight:600">${RLAB[r.k][0]}</b>
+ ${r.k==='band'?`<div class="lbl">Bant şu an ±${N0.format(S.set.band)} puan; Ayarlar → Hedef dağılım’dan değişir.</div>`:`<div class="pr2">${r.k==='maxType'?`<select class="in" data-t="${i}">${ts.map(t=>`<option ${t===r.t?'selected':''}>${esc(t)}</option>`).join('')}</select>`:''}<input class="in" data-v="${i}" inputmode="decimal" value="${esc(String(r.v).replace('.',','))}"><span class="lbl">${RLAB[r.k][1]}</span></div>`}
+ ${r.k==='ddEtf'||r.k==='ddPort'?'<div class="lbl" style="margin-top:4px">Zirve: uygulamanın takip başladığından beri gördüğü en yüksek değer.</div>':''}${r.k==='mag7'||r.k==='maxCo'?'<div class="lbl" style="margin-top:4px">Fonların en büyük pozisyonlarına göre yaklaşık hesaplanır.</div>':''}</div></div>`).join('')}</div>
+ <div class="btns"><button class="btn sec" data-a="n">Vazgeç</button><button class="btn" data-a="y">Kaydet</button></div>`);
+ $('#sc').onclick=e=>{const a=e.target.closest('button')?.dataset.a;if(!a)return;if(a==='n'){closeSheet();return}
+  $$('#rlst [data-i]').forEach(x=>R[+x.dataset.i].on=x.checked);$$('#rlst [data-v]').forEach(x=>{const v=parseNum(x.value);if(v>0)R[+x.dataset.v].v=v});$$('#rlst [data-t]').forEach(x=>R[+x.dataset.t].t=x.value);
+  S.rules=R;save();closeSheet();render();toast('Kurallar kaydedildi')}}
+
+/* ================= ne oldu ================= */
+let neP='g';
+function trackSince(){const d=Object.keys(S.hist).filter(k=>S.hist[k].e).sort()[0];return d||today()}
+function typeW(vb,TY){const tb=Object.values(vb).reduce((a,b)=>a+b,0),o={};Object.entries(vb).forEach(([s,v])=>{const t=TY[s]||'—';o[t]=(o[t]||0)+(tb?v/tb:0)});return o}
+function neData(c,p){const TY=Object.fromEntries(S.pos.map(x=>[x.s,x.t]));S.tx.forEach(t=>{if(t.prev&&!TY[t.s])TY[t.s]=t.prev.t});
+ const sq=S.prices.SPY;
+ if(p==='g'){const items=c.rows.filter(r=>isFinite(r.dayP)).map(r=>({s:r.s,d:r.day,p:r.dayP}));const vb={};c.rows.forEach(r=>{const q=S.prices[r.s];vb[r.s]=r.q*(isFinite(r.dayP)?q.pc:r.price)});
+  return {lbl:'Önceki kapanışa göre',gain:c.day,pct:c.dayP,spy:sq&&sq.src==='api'&&sq.pc>0?sq.c/sq.pc-1:NaN,flow:0,items,wb:typeW(vb,TY)}}
+ const days=p==='h'?7:30,lim=daysAgo(days),all=Object.entries(S.hist).sort((a,b)=>a[0]<b[0]?-1:1);let base=null;
+ for(const x of all)if(x[0]<=lim)base=x;let partial=false;if(!base){base=all.find(x=>x[0]<today());partial=true}if(!base)return {empty:true};
+ const [bd,o]=base,flow=(S.netIn??0)-(o.n??o.c),gain=c.total-o.v-flow,spy=o.b>0&&sq&&sq.c>0?sq.c/o.b-1:NaN;let items=null,wb=null;
+ if(o.e){const fl={};S.tx.forEach(t=>{if(t.d>bd&&(t.k==='B'||t.k==='S'))fl[t.s]=(fl[t.s]||0)+(t.k==='B'?1:-1)*t.q*t.p});
+  const syms=new Set([...c.rows.map(r=>r.s),...Object.keys(o.e)]);items=[];const vb={};
+  syms.forEach(s=>{const r=c.rows.find(x=>x.s===s);const [qb,pb]=o.e[s]||[0,0];vb[s]=qb*pb;const d=(r?r.value:0)-qb*pb-(fl[s]||0),b0=qb*pb+Math.max(0,fl[s]||0);items.push({s,d,p:b0>0?d/b0:NaN})});wb=typeW(vb,TY)}
+ return {lbl:(partial?fmtD(bd)+' tarihinden bu yana':'Son '+days+' gün')+' · '+fmtD(bd)+' – '+fmtD(today()),gain,pct:o.v?gain/o.v:NaN,spy,flow,items,wb}}
+function neCard(c){const D=neData(c,neP);
+ let h=`<div class="card"><h2>Ne oldu?<span class="sub"><div class="seg" id="neS" style="min-width:220px">${[['g','Bugün'],['h','Bu hafta'],['a','Bu ay']].map(([v,l])=>`<button data-p="${v}" class="${neP===v?'on':''}">${l}</button>`).join('')}</div></span></h2>`;
+ if(D.empty)return h+`<div class="empty">Karşılaştırılacak geçmiş kayıt henüz yok. Uygulamayı açtığın her gün kaydedilir; haftalık ve aylık özet buna göre oluşur.</div></div>`;
+ const ex=D.pct-D.spy;
+ h+=`<div class="lbl" style="margin:-4px 0 12px">${esc(D.lbl)}</div><div class="ne3"><div><span class="lbl">Piyasa etkisi</span><b class="${cls(D.gain)}"><span class="amt">${sUsd(D.gain)}</span></b><span class="${cls(D.pct)}" style="font-size:13.5px;font-weight:650">${arw(D.pct)}</span></div><div><span class="lbl">S&amp;P 500 (SPY)</span><b class="${cls(D.spy)}">${arw(D.spy)}</b></div><div><span class="lbl">Fark</span><b class="${cls(ex)}">${isFinite(ex)?pp(ex):'—'}</b></div></div>`;
+ if(Math.abs(D.flow)>0.5)h+=`<p class="note">Bu dönemde net <span class="amt">${sUsd(D.flow)}</span> para ${D.flow>0?'girişi':'çıkışı'} oldu; piyasa etkisine dahil edilmedi.</p>`;
+ if(D.items){const pos=D.items.filter(x=>x.d>0.005).sort((a,b)=>b.d-a.d).slice(0,3),neg=D.items.filter(x=>x.d<-0.005).sort((a,b)=>a.d-b.d).slice(0,3);
+  const li=a=>a.length?a.map(x=>`<div><span><b>${esc(x.s)}</b> <span class="lbl">${arw(x.p)}</span></span><b class="amt ${cls(x.d)}">${sUsd(x.d)}</b></div>`).join(''):'<div class="lbl">Yok</div>';
+  h+=`<div class="mv" style="margin-top:14px"><div class="mvl"><div class="sec-t" style="margin:0 0 4px">En çok katkı yapan</div>${li(pos)}</div><div class="mvl"><div class="sec-t" style="margin:0 0 4px">En çok kaybettiren</div>${li(neg)}</div></div>`}
+ if(D.wb){const b=S.set.band/100;const rows=c.groups.filter(g=>g.value>0||D.wb[g.t]).map(g=>{const w0=D.wb[g.t]||0,dw=g.w-w0,o0=g.tw>0&&Math.abs(w0-g.tw)>b+1e-9,o1=g.tw>0&&Math.abs(g.w-g.tw)>b+1e-9;return {t:g.t,w0,w:g.w,dw,ch:o0!==o1?(o1?'Bant dışına çıktı':'Banda döndü'):''}}).sort((a,b)=>Math.abs(b.dw)-Math.abs(a.dw)).slice(0,5);
+  h+=`<div class="sec-t">Ağırlık kayması (en çok değişen 5 tür)</div><div class="ws">${rows.map(x=>`<div><span><span class="sw" style="background:${colorOf(x.t)};margin-right:6px"></span>${esc(x.t)} <span class="lbl">${pct(x.w0)} → ${pct(x.w)}</span>${x.ch?` <span class="pill ${x.ch==='Banda döndü'?'pi':'po'}">${x.ch}</span>`:''}</span><b class="${Math.abs(x.dw)<0.0005?'mu':''}">${pp(x.dw)}</b></div>`).join('')}</div>`}
+ else h+=`<p class="note">ETF bazında kırılım ve ağırlık kayması, ${fmtD(trackSince())} tarihinden itibaren kaydedilen günlük verilerle oluşacak.</p>`;
+ return h+'</div>'}
+
+/* ================= senaryo ================= */
+const FAC=[['spx','S&P 500','%'],['ndx','Nasdaq-100','%'],['gold','Altın','%'],['silver','Gümüş','%'],['comm','Emtia sepeti','%'],['rate','ABD uzun vade faizi','puan'],['tr','Türkiye hisseleri ($)','%'],['fx','USD/TRY','%']];
+const SCN=[{n:'2022 faiz şoku',f:{spx:-19,ndx:-33,gold:0,silver:3,comm:16,rate:2,tr:100,fx:40},d:'2022 takvim yılına benzer: yaklaşık değerler'},
+ {n:'2020 ani çöküş',f:{spx:-34,ndx:-28,gold:-3,silver:-22,comm:-20,rate:-0.7,tr:-42,fx:8},d:'19 Şubat – 23 Mart 2020 dönemine benzer: yaklaşık değerler'},
+ {n:'2008 finansal kriz',f:{spx:-38,ndx:-42,gold:5,silver:-24,comm:-36,rate:-1.4,tr:-60,fx:30},d:'2008 takvim yılına benzer: yaklaşık değerler'},
+ {n:'Teknoloji düzeltmesi',f:{spx:-15,ndx:-25,gold:3,silver:0,comm:0,rate:-0.3,tr:-10,fx:5},d:'Varsayımsal senaryo'},
+ {n:'Faiz +1 puan',f:{spx:-8,ndx:-12,gold:-3,silver:-5,comm:0,rate:1,tr:-10,fx:5},d:'Varsayımsal senaryo'},
+ {n:'Durgunluk',f:{spx:-20,ndx:-25,gold:10,silver:-10,comm:-20,rate:-1.5,tr:-25,fx:15},d:'Varsayımsal senaryo'}];
+const EXPO={SPY:{spx:1},IVV:{spx:1},VOO:{spx:1},SPLG:{spx:1},SPYM:{spx:1},QQQ:{ndx:1},QQQM:{ndx:1},MAGS:{ndx:1.25},SPMO:{spx:1.05},JMOM:{spx:1},MTUM:{spx:1},ARKK:{ndx:1.6},NASA:{ndx:1.3},
+ GLD:{gold:1},IAU:{gold:1},GLDM:{gold:1},SLV:{silver:1},PDBC:{comm:1},FTGC:{comm:1},TLT:{dur:16},VGIT:{dur:5},BSV:{dur:2.6},IEF:{dur:7.3},TUR:{tr:1}};
+const TEXPO={'S&P':{spx:1},'Nasdaq':{ndx:1},'Altın':{gold:1},'Emtia':{comm:1},'Tahvil':{dur:7},'Momentum':{spx:1},'Teknoloji':{ndx:1.3},'Türkiye':{tr:1},'Özel':{spx:1.2}};
+const FN={spx:'S&P 500',ndx:'Nasdaq-100',gold:'Altın',silver:'Gümüş',comm:'Emtia',tr:'Türkiye'};
+const expo=(s,t)=>EXPO[s]||TEXPO[t]||{spx:1};
+function shock(s,t,f){let r=0;for(const [k,b] of Object.entries(expo(s,t)))r+=k==='dur'?-b*(f.rate||0)/100:b*(f[k]||0)/100;return Math.max(-1,r)}
+const expoTxt=(s,t)=>Object.entries(expo(s,t)).map(([k,b])=>k==='dur'?'faiz süresi '+N1.format(b)+' yıl':FN[k]+(b!==1?' ×'+NQ.format(b):'')).join(', ')+(EXPO[s]?'':' (türe göre)');
+let scSel=0,scF={...SCN[0].f};
+const fmtIn=v=>String(v??0).replace('.',',');
+function scCard(){return `<div class="card" id="scn"><h2>Senaryo ve stres testi</h2>
+ <div class="chipsx" id="scP">${SCN.map((s,i)=>`<button data-i="${i}" class="${scSel===i?'on':''}">${esc(s.n)}</button>`).join('')}<button data-i="-1" class="${scSel===-1?'on':''}">Kendi senaryom</button></div>
+ <div class="lbl" id="scN" style="margin:0 0 12px">${scSel>=0?esc(SCN[scSel].d):'Değerleri kendin belirle'}</div>
+ <div class="fx" id="scF">${FAC.map(([k,l,u])=>`<div><label for="sf-${k}">${l}</label><div class="fxu"><input class="in" id="sf-${k}" data-k="${k}" inputmode="decimal" value="${fmtIn(scF[k])}"><small>${u}</small></div></div>`).join('')}</div>
+ <div id="scR"></div></div>`}
+function bindSc(c){const draw=()=>{const res=c.rows.map(r=>{const s=shock(r.s,r.t,scF);return {r,s,d:r.value*s}}).sort((a,b)=>a.d-b.d);
+  const tot=res.reduce((a,x)=>a+x.d,0),R=c.total?tot/c.total:0,fx=(scF.fx||0)/100,RT=(1+R)*(1+fx)-1,spx=(scF.spx||0)/100;
+  const byT={};res.forEach(x=>byT[x.r.t]=(byT[x.r.t]||0)+x.d);const tl=Object.entries(byT).sort((a,b)=>a[1]-b[1]);const mx=Math.max(...tl.map(x=>Math.abs(x[1])),1);
+  $('#scR').innerHTML=`<div class="sres"><div><span class="lbl">Portföy etkisi (USD)</span><div class="sbig ${cls(tot)}"><span class="amt">${sUsd(tot)}</span></div><div class="${cls(R)}" style="font-weight:650">${arw(R)}</div>
+   <div class="sk"><div><span>Senaryo sonrası değer</span><b class="amt">${usd(c.total+tot)}</b></div>${fx?`<div><span>TL bazında değişim</span><b class="${cls(RT)}">${arw(RT)}</b></div>`:''}<div><span>Tamamı S&amp;P 500 olsaydı</span><b class="${cls(spx)}">${arw(spx)}</b></div><div><span>Fark (çeşitlendirme etkisi)</span><b class="${cls(R-spx)}">${pp(R-spx)}</b></div></div></div>
+   <div><div class="sec-t" style="margin-top:0">Türlere göre etki</div><div class="db">${tl.map(([t,d])=>`<div class="r"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span class="sw" style="background:${colorOf(t)};margin-right:6px"></span>${esc(t)}</span><div class="t2"><i style="${d<0?'right:50%':'left:50%'};width:${Math.abs(d)/mx*50}%;background:var(${d<0?'--dn':'--up'})"></i></div><b class="amt ${cls(d)}">${sUsd(d)}</b></div>`).join('')}</div></div></div>
+   <details style="margin-top:14px"><summary class="lbl" style="cursor:pointer;padding:6px 0">ETF bazında etki ve varsayımlar</summary><div class="etl">${res.map(x=>`<div><div><b>${esc(x.r.s)}</b> <span>${esc(expoTxt(x.r.s,x.r.t))}</span></div><b class="${cls(x.s)}">${arw(x.s)}</b><b class="amt ${cls(x.d)}" style="min-width:90px;text-align:right">${sUsd(x.d)}</b></div>`).join('')}</div></details>
+   <p class="note">Basit doğrusal bir modeldir: her ETF, eşlendiği piyasa faktörüyle hareket ettirilir; tahvil fonları faiz değişimi × süre ile hesaplanır. Korelasyon, kur, temettü ve vergi etkileri yaklaşıktır. Bir tahmin değil, “ne olurdu” hesabıdır.</p>`};
+ draw();
+ $('#scP').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;scSel=i;if(i>=0)scF={...SCN[i].f};$$('#scP button').forEach(x=>x.classList.toggle('on',x===b));$('#scN').textContent=i>=0?SCN[i].d:'Değerleri kendin belirle';FAC.forEach(([k])=>$('#sf-'+k).value=fmtIn(scF[k]));draw()};
+ $('#scF').oninput=e=>{const k=e.target.dataset.k;if(!k)return;const v=parseNum(e.target.value);scF[k]=isFinite(v)?v:0;if(scSel!==-1){scSel=-1;$$('#scP button').forEach(x=>x.classList.toggle('on',x.dataset.i==='-1'));$('#scN').textContent='Değerleri kendin belirle'}draw()}}
 
 /* ================= işlemler ================= */
 let kind='B';
@@ -670,7 +804,7 @@ function bindAyr(){
 $('#fileIn').onchange=async e=>{const f=e.target.files[0];if(!f)return;const t=await f.text();e.target.value='';importText(t.trim())};
 
 /* ---- yedek ---- */
-function bkObj(){return {pos:S.pos,tx:S.tx,hist:S.hist,realized:S.realized,netIn:S.netIn,targets:S.set.targets,colors:S.set.colors,band:S.set.band,pref:S.set.pref}}
+function bkObj(){return {pos:S.pos,tx:S.tx,hist:S.hist,realized:S.realized,netIn:S.netIn,targets:S.set.targets,colors:S.set.colors,band:S.set.band,pref:S.set.pref,rules:S.rules,peaks:S.peaks,lastRebal:S.lastRebal}}
 function bkText(){if(E&&E.d)return 'PF2:'+b64(te.encode(JSON.stringify({salt:E.salt,iter:E.iter,wp:E.wp,d:E.d})));return 'PF1:'+b64(te.encode(JSON.stringify(bkObj())))}
 function markBk(){S.lastBk=Date.now();S.txSinceBk=0;save();render()}
 async function doBackup(){const txt=bkText();const name='portfoy-yedek-'+today()+'.txt';
@@ -681,6 +815,7 @@ function applyImport(o){const pos=(o.pos||[]).filter(p=>p&&p.s&&p.q>0).map(p=>({
  S.pos=pos;S.tx=Array.isArray(o.tx)?o.tx:[];S.hist=o.hist||{};S.realized=+o.realized||0;
  const tg=o.targets||o.set?.targets,cl=o.colors||o.set?.colors,bd=o.band||o.set?.band,pf=o.pref||o.set?.pref;
  if(tg)S.set.targets=tg;if(cl)S.set.colors=cl;if(bd)S.set.band=bd;if(pf)S.set.pref=pf;
+ if(Array.isArray(o.rules))S.rules=o.rules;if(o.peaks)S.peaks=o.peaks;if(o.lastRebal)S.lastRebal=o.lastRebal;
  S.netIn=o.netIn!=null?+o.netIn:+pos.reduce((a,p)=>a+p.q*p.a,0).toFixed(2);S.lastBk=Date.now();S.txSinceBk=0;save();go('ozet');toast('Portföy yüklendi');refresh()}
 function importText(v){if(!v)return;
  if(v.startsWith('PF1:')){let o;try{o=JSON.parse(td.decode(ub64(v.slice(4).replace(/\s/g,''))))}catch(e){toast('Kod okunamadı, eksiksiz kopyaladığından emin ol');return}
@@ -734,7 +869,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 addEventListener('pagehide',()=>flush());
 
 /* ================= başlat ================= */
-function start(){started=true;if(S.netIn==null&&S.pos.length)S.netIn=+S.pos.reduce((a,p)=>a+p.q*p.a,0).toFixed(2);
+function start(){started=true;if(!S.lastRebal){S.lastRebal=Date.now();save()}if(S.netIn==null&&S.pos.length)S.netIn=+S.pos.reduce((a,p)=>a+p.q*p.a,0).toFixed(2);
  document.body.classList.remove('locked');cur=TT[S.set.tab]?S.set.tab:'ozet';go(cur);schedule();refresh()}
 applyTheme();
 if(E&&E.wp)showLock();
